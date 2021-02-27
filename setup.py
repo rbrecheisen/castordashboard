@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import os
+
 """The setup script."""
 
 from setuptools import setup, find_packages
@@ -10,11 +12,11 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [ ]
+requirements = ['barbell2', 'pytest']
 
-setup_requirements = [ ]
+setup_requirements = []
 
-test_requirements = [ ]
+test_requirements = []
 
 setup(
     author="Ralph Brecheisen",
@@ -43,6 +45,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/rbrecheisen/castordashboard',
-    version='0.1.0',
+    version=os.environ['VERSION'],
     zip_safe=False,
 )
