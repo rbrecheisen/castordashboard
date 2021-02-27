@@ -1,12 +1,24 @@
 TODO
 ====
 
-etl
+ETL
 ---
     - Connect to Castor once and retrieve dashboard data
+
+      - What do you want to display?
+        I want to show a bar chart where each bar represents the number of surgical procedures done
+        within a given yearly quarter.
+
+      - How to structure the data to make visualization easy?
+        The most optimal data structure for this purpose is the histogram where each bin contains
+        the quarter counts.
+
+      - How to transform the data loaded from Castor to the structure needed for visualization?
+        To build the histogram, you need surgery dates.
+
     x Connect to Castor every 5 seconds and retrieve list of studies
     x Deploy 1st version with dummy script
 
-dashboard
+Dashboard
 ---------
     - Implement 1st version
