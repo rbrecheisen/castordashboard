@@ -3,7 +3,8 @@ TODO
 
 etl
 ---
-    - Connect to Castor every 5 seconds and retrieve list of studies
+    - Connect to Castor once and retrieve dashboard data
+    x Connect to Castor every 5 seconds and retrieve list of studies
     x Deploy 1st version with dummy script
 
 dashboard
