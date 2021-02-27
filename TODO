@@ -3,8 +3,9 @@ TODO
 
 etl
 ---
-- Deploy 1st version with dummy script
+    - Connect to Castor every 5 seconds and retrieve list of studies
+    x Deploy 1st version with dummy script
 
 dashboard
 ---------
-- Implement 1st version
+    - Implement 1st version
