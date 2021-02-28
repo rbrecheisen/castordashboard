@@ -11,9 +11,28 @@ class Runner:
 
     def __init__(self, interval=0, time_period=0):
         self.interval = interval
-        self.time_period = time_period
+        self.time_period = self.get_time_period_in_secs(time_period)
         self.script = None
         self.logger = Logger(prefix='cd_etl_Runner')
+
+    @staticmethod
+    def get_time_period_in_secs(time_period):
+        if isinstance(time_period, int):
+            return time_period
+        if isinstance(time_period, str):
+            if time_period == 'minute':
+                return 60
+            if time_period == 'hour':
+                return 3600
+            if time_period == 'day':
+                return 24 * 3600
+            if time_period == 'week':
+                return 7 * 24 * 3600
+            if time_period == 'month':
+                return 30 * 7 * 24 * 3600
+            if time_period == 'year':
+                return 12 * 30 * 7 * 24 * 3600
+        return -1
 
     def execute(self):
 
@@ -103,8 +122,10 @@ class RetrieveDashboardDataScript(Script):
             field_data[field_names[i]] = []
             for record in records:
                 data = client.get_field_data(study_id, record['id'], field_ids[i])
-                field_data[field_names[i]].append(data)
-                self.runner.logger.print(record['id'])
+                if 'value' in data.keys():
+                    # Check this because empty fields return a server error (data point not found)
+                    field_data[field_names[i]].append(data)
+                    self.runner.logger.print(record['id'])
         print(json.dumps(field_data, indent=4))
 
         # os.makedirs(self.params.output_dir, exist_ok=True)
