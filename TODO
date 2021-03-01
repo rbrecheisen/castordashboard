@@ -3,6 +3,7 @@ TODO
 
 ETL
 ---
+
     - Connect to Castor once and retrieve dashboard data
     - Add timing info for start/stop script
     - Add check_params function to script
@@ -13,4 +14,7 @@ ETL
 
 Dashboard
 ---------
-    - Implement 1st version
+
+    - Lookup most recent output directory histogram data
+
+    x Implement 1st version
