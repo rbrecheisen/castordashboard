@@ -48,10 +48,10 @@ class RetrieveStudyListScript(Script):
             self.runner.logger.print(study)
 
 
-class RetrieveHistogramWithProcedureCountsScript(Script):
+class RetrieveProcedureCountsPerQuarterScript(Script):
 
     def __init__(self, runner, params):
-        super(RetrieveHistogramWithProcedureCountsScript, self).__init__(self.__class__, runner, params)
+        super(RetrieveProcedureCountsPerQuarterScript, self).__init__(self.__class__, runner, params)
 
     @staticmethod
     def get_numerical_representation(date_str):

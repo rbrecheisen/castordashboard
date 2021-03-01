@@ -1,3 +1,20 @@
+DESIGN
+======
+
+A script runner should run only one script. If you want more scripts, just instantiate multiple runners
+(with possibly differing time intervals).
+
+params = {
+    'script': 'RetrieveProcedureCountsPerQuarterScript',
+    'script_params': {
+        'study_name': 'ESPRESSO_v2.0_DPCA',
+        'use_cache': true,
+        'verbose': true,
+        'output_dir': '/tmp/castor_dashboard',
+        'output_json': 'histogram_dpca.json',
+    },
+}
+
 TODO
 ====
 
@@ -7,7 +24,6 @@ ETL
     - Connect to Castor once and retrieve dashboard data
     - Add timing info for start/stop script
     - Add check_params function to script
-    - Runner should be able to run multiple scripts (look at frameworks like Celery)
 
     x Connect to Castor every 5 seconds and retrieve list of studies
     x Deploy 1st version with dummy script

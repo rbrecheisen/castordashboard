@@ -5,7 +5,7 @@ from types import SimpleNamespace
 from castordashboard.etl import ScriptRunner
 from castordashboard.etl import DummyScript
 from castordashboard.etl import RetrieveStudyListScript
-from castordashboard.etl import RetrieveDashboardDataScript
+from castordashboard.etl import RetrieveProcedureCountsPerQuarterScript
 
 
 def find_latest_log(prefix):
@@ -63,8 +63,6 @@ def test_retrieve_dashboard_data_liver():
 
     params = {
         'study_name': 'ESPRESSO_v2.0_DHBA',
-        'year_begin': 2014,
-        'year_end': 2018,
         'field_name': 'dhba_datok',
         'output_dir': '/tmp/castordashboard',
         'output_json': 'histogram_dhba.json',
@@ -73,7 +71,7 @@ def test_retrieve_dashboard_data_liver():
     }
 
     runner = ScriptRunner()
-    runner.script = RetrieveDashboardDataScript(runner, params)
+    runner.script = RetrieveProcedureCountsPerQuarterScript(runner, params)
     runner.execute()
     runner.logger.close()
 
@@ -85,8 +83,6 @@ def test_retrieve_dashboard_data_pancreas():
 
     params = {
         'study_name': 'ESPRESSO_v2.0_DPCA',
-        'year_begin': 2014,
-        'year_end': 2018,
         'field_name': 'dpca_datok',
         'output_dir': '/tmp/castordashboard',
         'output_json': 'histogram_dpca.json',
@@ -95,7 +91,7 @@ def test_retrieve_dashboard_data_pancreas():
     }
 
     runner = ScriptRunner()
-    runner.script = RetrieveDashboardDataScript(runner, params)
+    runner.script = RetrieveProcedureCountsPerQuarterScript(runner, params)
     runner.execute()
     runner.logger.close()
 
@@ -111,7 +107,7 @@ def test_main():
 
     with open('params.json', 'w') as f:
         json.dump({
-            'script': 'castordashboard.etl.scripts.DummyScript',
+            'script': 'RetrieveProcedureCountsPerQuarterScript',
             'study_name': 'ESPRESSO_v2.0_DPCA',
             'output_dir': '/tmp/castordashboard',
             'output_json': 'histogram_dpca.json',
