@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2762026b-f4b7-4569-8d9e-bc8d4780d62b" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/castordashboard.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/castordashboard.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/castordashboard/etl/script_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/castordashboard/etl/script_runner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/castordashboard/etl/scripts.py" beforeDir="false" afterPath="$PROJECT_DIR$/castordashboard/etl/scripts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_etl.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_etl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/params.json" beforeDir="false" afterPath="$PROJECT_DIR$/tests/params.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,26 +19,35 @@
       <file leaf-file-name="script_runner.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/castordashboard/etl/script_runner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="57" column="53" selection-start-line="57" selection-start-column="53" selection-end-line="57" selection-end-column="53" />
+            <state relative-caret-position="315">
+              <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_etl.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/test_etl.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="109" column="49" lean-forward="true" selection-start-line="109" selection-start-column="49" selection-end-line="109" selection-end-column="49" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="scripts.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="scripts.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/castordashboard/etl/scripts.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="26" column="33" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
+            <state relative-caret-position="-1083">
+              <caret line="26" column="35" lean-forward="true" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="params.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/params.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_etl.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tests/test_etl.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-618">
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
             </state>
           </provider>
         </entry>
@@ -67,20 +75,22 @@
         <option value="$PROJECT_DIR$/tests/test_dashboard.py" />
         <option value="$PROJECT_DIR$/castordashboard/dashboard/main.py" />
         <option value="$PROJECT_DIR$/tests/main.py" />
-        <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/TODO" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/castordashboard/etl/main.py" />
-        <option value="$PROJECT_DIR$/castordashboard/etl/__init__.py" />
-        <option value="$PROJECT_DIR$/castordashboard/etl/scripts.py" />
-        <option value="$PROJECT_DIR$/castordashboard/etl/script_runner.py" />
         <option value="$PROJECT_DIR$/tests/test_etl.py" />
+        <option value="$PROJECT_DIR$/setup.py" />
+        <option value="$PROJECT_DIR$/castordashboard/etl/__init__.py" />
+        <option value="$PROJECT_DIR$/tests/run_etl.sh" />
+        <option value="$PROJECT_DIR$/tests/params.json" />
+        <option value="$PROJECT_DIR$/castordashboard/etl/script_runner.py" />
+        <option value="$PROJECT_DIR$/castordashboard/etl/scripts.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="372" />
-    <option name="y" value="60" />
+    <option name="x" value="683" />
+    <option name="y" value="167" />
     <option name="width" value="1678" />
     <option name="height" value="1146" />
   </component>
@@ -146,7 +156,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.tests:main">
+  <component name="RunManager" selected="Python.script_runner">
     <configuration name="script_runner" type="PythonConfigurationType" factoryName="Python">
       <module name="castordashboard" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -249,22 +259,23 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="372" y="60" width="1678" height="1146" extended-state="0" />
+    <frame x="683" y="167" width="1678" height="1146" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info id="DB Browser" />
       <window_info anchor="bottom" id="DB Execution Console" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.5462345" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.5462345" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info anchor="bottom" id="Python Console" order="7" weight="0.32983795" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.24499524" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21363911" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21363911" />
       <window_info id="Project Explorer" />
       <window_info id="Job Explorer" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Console" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32983795" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39942804" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -274,7 +285,6 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -285,7 +295,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="5" />
+      <option name="time" value="6" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -311,20 +321,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/castordashboard/utils.py" />
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="22" lean-forward="true" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.virtualenvs/research/lib/python3.6/site-packages/barbell2/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="52" column="40" selection-start-line="52" selection-start-column="40" selection-end-line="52" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/cd_etl_Runner_20210227084538.txt" />
     <entry file="file://$USER_HOME$/.virtualenvs/research/lib/python3.6/site-packages/_pytest/config/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -364,13 +360,6 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/.virtualenvs/research/lib/python3.6/site-packages/barbell2/castorclient/castorclient.py" />
-    <entry file="file://$PROJECT_DIR$/castordashboard/etl/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/log_etl_20210301094305.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -381,27 +370,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/params.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/castordashboard/etl/script_runner.py">
+    <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="57" column="53" selection-start-line="57" selection-start-column="53" selection-end-line="57" selection-end-column="53" />
+        <state relative-caret-position="840">
+          <caret line="56" selection-start-line="56" selection-end-line="56" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_etl.py">
+    <entry file="file://$PROJECT_DIR$/castordashboard/etl/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="109" column="49" lean-forward="true" selection-start-line="109" selection-start-column="49" selection-end-line="109" selection-end-column="49" />
+        <state relative-caret-position="60">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/run_etl.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="41" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/params.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/castordashboard/etl/scripts.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="26" column="33" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
+        <state relative-caret-position="-1083">
+          <caret line="26" column="35" lean-forward="true" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.virtualenvs/research/lib/python3.6/site-packages/barbell2/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="29" column="8" lean-forward="true" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/castordashboard/etl/script_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_etl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-618">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>

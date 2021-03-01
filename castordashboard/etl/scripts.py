@@ -1,5 +1,6 @@
 import os
 import json
+import datetime
 
 from types import SimpleNamespace
 from barbell2.castorclient import CastorClient
@@ -13,6 +14,14 @@ class Script:
         self.params = params
         if isinstance(self.params, dict):
             self.params = SimpleNamespace(**params)
+
+    def save_to_json(self, data):
+        os.makedirs(self.params.output_dir, exist_ok=True)
+        now = datetime.datetime.now()
+        timestamp = '{}'.format(now.strftime('%Y%m%d%H%M%S'))
+        os.makedirs(os.path.join(self.params.output_dir, timestamp), exist_ok=True)
+        with open(os.path.join(self.params.output_dir, timestamp, self.params.output_json), 'w') as f:
+            json.dump(data, f)
 
     def execute(self):
         raise NotImplementedError()
@@ -133,11 +142,6 @@ class RetrieveHistogramWithProcedureCountsScript(Script):
                 self.runner.logger.print(record['id'])
         return surgery_dates
 
-    def save_histogram(self, histogram):
-        os.makedirs(self.params.output_dir, exist_ok=True)
-        with open(os.path.join(self.params.output_dir, self.params.output_json), 'w') as f:
-            json.dump(histogram, f)
-
     def execute(self):
         surgery_dates = self.get_surgery_dates()
         earliest_date, latest_date = self.get_earliest_and_latest_date(surgery_dates)
@@ -152,4 +156,4 @@ class RetrieveHistogramWithProcedureCountsScript(Script):
             year_end = latest_year
         histogram = self.get_histogram(year_begin, year_end, surgery_dates)
         histogram = self.flatten_histogram(histogram)
-        self.save_histogram(histogram)
+        self.save_to_json(histogram)

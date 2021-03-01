@@ -59,7 +59,7 @@ Missing argument --params=<Path to JSON parameter file>
 For example:
 
 {
-    "script":       "castordashboard.etl.script.RetrieveHistogramWithProcedureCountsScript",
+    "script":       "RetrieveHistogramWithProcedureCountsScript",
     "study_name":   "ESPRESSO_v2.0_DPCA",
     "year_begin":   2014,
     "year_end":     2018,
@@ -87,8 +87,7 @@ def main():
     params = SimpleNamespace(**params)
 
     import importlib
-    items = params.script.split('.')
-    script = getattr(importlib.import_module('.'.join(items[:-1])), items[-1])
+    script = getattr(importlib.import_module('castordashboard.etl.scripts'), name=params.script)
 
     runner = ScriptRunner()
     runner.script = script(runner, params)
