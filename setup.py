@@ -42,6 +42,12 @@ setup(
     name='castordashboard',
     packages=find_packages(include=['castordashboard', 'castordashboard.*']),
     setup_requires=setup_requirements,
+    entry_points={
+        'console_scripts': [
+            'cd_etl=castordashboard.etl.script_runner:main',
+            'cd_dashboard=castordashboard.dashboard.main:main',
+        ],
+    },
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/rbrecheisen/castordashboard',

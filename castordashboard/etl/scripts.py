@@ -24,7 +24,7 @@ class DummyScript(Script):
         super(DummyScript, self).__init__(self.__class__, runner, params)
 
     def execute(self):
-        self.runner.logger.print('Hello, world!')
+        self.runner.logger.print(json.dumps(vars(self.params), indent=4))
 
 
 class RetrieveStudyListScript(Script):
@@ -39,10 +39,10 @@ class RetrieveStudyListScript(Script):
             self.runner.logger.print(study)
 
 
-class RetrieveDashboardDataScript(Script):
+class RetrieveHistogramWithProcedureCountsScript(Script):
 
     def __init__(self, runner, params):
-        super(RetrieveDashboardDataScript, self).__init__(self.__class__, runner, params)
+        super(RetrieveHistogramWithProcedureCountsScript, self).__init__(self.__class__, runner, params)
 
     @staticmethod
     def get_numerical_representation(date_str):

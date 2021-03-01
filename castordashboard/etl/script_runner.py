@@ -1,5 +1,7 @@
 import time
+import argparse
 
+from types import SimpleNamespace
 from barbell2.utils import Logger, current_time_secs, elapsed_secs
 
 
@@ -49,3 +51,49 @@ class ScriptRunner:
                 self.logger.print('Time elapsed > requested period of {} seconds'.format(self.time_period))
                 break
         self.logger.print('Runner stopped')
+
+
+PARAM_HELP = """
+Missing argument --params=<Path to JSON parameter file>
+
+For example:
+
+{
+    "script":       "castordashboard.etl.script.RetrieveHistogramWithProcedureCountsScript",
+    "study_name":   "ESPRESSO_v2.0_DPCA",
+    "year_begin":   2014,
+    "year_end":     2018,
+    "output_dir":   "/tmp/castordashboard",
+    "output_json":  "histogram_dpca.json",
+    "use_cache":    false,
+    "verbose":      false
+}
+"""
+
+
+def main():
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('params', help='Full path to JSON parameter file (default: params.json)', default='params.json')
+    args = parser.parse_args()
+
+    if args.params is None:
+        print(PARAM_HELP)
+        return
+
+    import json
+    with open(args.params, 'r') as f:
+        params = json.load(f)
+    params = SimpleNamespace(**params)
+
+    import importlib
+    items = params.script.split('.')
+    script = getattr(importlib.import_module('.'.join(items[:-1])), items[-1])
+
+    runner = ScriptRunner()
+    runner.script = script(runner, params)
+    runner.execute()
+
+
+if __name__ == '__main__':
+    main()
