@@ -1,0 +1,10 @@
+{
+    "script":       "castordashboard.etl.script.RetrieveHistogramWithProcedureCountsScript",
+    "study_name":   "ESPRESSO_v2.0_DPCA",
+    "year_begin":   2014,
+    "year_end":     2018,
+    "output_dir":   "/tmp/castordashboard",
+    "output_json":  "histogram_dpca.json",
+    "use_cache":    false,
+    "verbose":      false
+}
