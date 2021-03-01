@@ -74,7 +74,9 @@ For example:
 def main():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('params', help='Full path to JSON parameter file (default: params.json)', default='params.json')
+    parser.add_argument('--params',
+                        help='Full path to JSON parameter file (default: params.json)',
+                        default='params.json')
     args = parser.parse_args()
 
     if args.params is None:
