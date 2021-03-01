@@ -1,9 +1,8 @@
 import os
-import json
 
 from types import SimpleNamespace
 
-from castordashboard.etl import Runner
+from castordashboard.etl import ScriptRunner
 from castordashboard.etl import DummyScript
 from castordashboard.etl import RetrieveStudyListScript
 from castordashboard.etl import RetrieveDashboardDataScript
@@ -22,44 +21,44 @@ def find_latest_log(prefix):
     return log_file
 
 
-# def test_periodic_execution():
-#
-#     runner = Runner(interval=0, time_period=0)
-#     runner.script = DummyScript(runner, {})
-#     runner.execute()
-#     runner.logger.close()
-#
-#     log_file = find_latest_log('cd_etl_Runner')
-#     with open(log_file, 'r') as f:
-#         assert len(f.readlines()) == 6
-#
-#     runner = Runner(interval=1, time_period=5)
-#     runner.script = DummyScript(runner, {})
-#     runner.execute()
-#     runner.logger.close()
-#
-#     log_file = find_latest_log('cd_etl_Runner')
-#     with open(log_file, 'r') as f:
-#         assert len(f.readlines()) == 18
-#
-#
-# def test_retrieve_study_list_every_5_secs():
-#
-#     runner = Runner(interval=5, time_period=10)
-#     runner.script = RetrieveStudyListScript(runner, {})
-#     runner.execute()
-#     runner.logger.close()
-#
-#     log_file = find_latest_log('cd_etl_Runner')
-#
-#     count = 0
-#     with open(log_file, 'r') as f:
-#         for line in f.readlines():
-#             if 'study_id' in line.strip():
-#                 count += 1
-#     assert count > 0
-#
-#
+def test_periodic_execution():
+
+    runner = Runner(interval=0, time_period=0)
+    runner.script = DummyScript(runner, {})
+    runner.execute()
+    runner.logger.close()
+
+    log_file = find_latest_log('cd_etl_Runner')
+    with open(log_file, 'r') as f:
+        assert len(f.readlines()) == 6
+
+    runner = Runner(interval=1, time_period=5)
+    runner.script = DummyScript(runner, {})
+    runner.execute()
+    runner.logger.close()
+
+    log_file = find_latest_log('cd_etl_Runner')
+    with open(log_file, 'r') as f:
+        assert len(f.readlines()) == 18
+
+
+def test_retrieve_study_list_every_5_secs():
+
+    runner = Runner(interval=5, time_period=10)
+    runner.script = RetrieveStudyListScript(runner, {})
+    runner.execute()
+    runner.logger.close()
+
+    log_file = find_latest_log('cd_etl_Runner')
+
+    count = 0
+    with open(log_file, 'r') as f:
+        for line in f.readlines():
+            if 'study_id' in line.strip():
+                count += 1
+    assert count > 0
+
+
 def test_retrieve_dashboard_data_liver():
 
     params = {
@@ -73,7 +72,7 @@ def test_retrieve_dashboard_data_liver():
         'verbose': True,
     }
 
-    runner = Runner()
+    runner = ScriptRunner()
     runner.script = RetrieveDashboardDataScript(runner, params)
     runner.execute()
     runner.logger.close()
@@ -95,7 +94,7 @@ def test_retrieve_dashboard_data_pancreas():
         'verbose': True,
     }
 
-    runner = Runner()
+    runner = ScriptRunner()
     runner.script = RetrieveDashboardDataScript(runner, params)
     runner.execute()
     runner.logger.close()
