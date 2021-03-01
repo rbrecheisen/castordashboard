@@ -1,13 +1,13 @@
+import time
+import json
+import datetime
+
 from types import SimpleNamespace
 from barbell2.utils import Logger, current_time_secs, elapsed_secs
 
 
 class ScriptRunner:
-    """
-    ScriptRunner is able to run one or more scripts that extract data from Castor, transform it
-    and save it to file for display at a later point in time. ScriptRunner connects to Castor
-    and shares the connection session with each script.
-    """
+
     def __init__(self, params):
         self.params = SimpleNamespace(**params)
         self.interval = self.params.interval
@@ -53,7 +53,33 @@ class ScriptRunner:
 
 
 class Script:
-    pass
+
+    def __init__(self, name, runner, params):
+        self.name = name
+        self.runner = runner
+        self.params = params
+        if isinstance(self.params, dict):
+            self.params = SimpleNamespace(**params)
+
+    def save_to_json(self, data):
+        os.makedirs(self.params.output_dir, exist_ok=True)
+        now = datetime.datetime.now()
+        timestamp = '{}'.format(now.strftime('%Y%m%d%H%M%S'))
+        os.makedirs(os.path.join(self.params.output_dir, timestamp), exist_ok=True)
+        with open(os.path.join(self.params.output_dir, timestamp, self.params.output_json), 'w') as f:
+            json.dump(data, f)
+
+    def execute(self):
+        raise NotImplementedError()
+
+
+class RetrieveProcedureCountsPerQuarterScript(Script):
+
+    def __init__(self, runner, params):
+        super(RetrieveProcedureCountsPerQuarterScript, self).__init__(self.__class__, runner, params)
+
+    def execute(self):
+        pass
 
 
 def main():
