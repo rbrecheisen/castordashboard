@@ -89,7 +89,7 @@ def main():
     params = SimpleNamespace(**params)
 
     import importlib
-    script = getattr(importlib.import_module('castordashboard.etl.scripts'), name=params.script)
+    script = getattr(importlib.import_module('castordashboard.etl.scripts'), params.script)
 
     runner = ScriptRunner()
     runner.script = script(runner, params)
