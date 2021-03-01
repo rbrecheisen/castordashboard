@@ -1,5 +1,5 @@
 {
-    "script":       "castordashboard.etl.scripts.RetrieveHistogramWithProcedureCountsScript",
+    "script":       "RetrieveHistogramWithProcedureCountsScript",
     "study_name":   "ESPRESSO_v2.0_DPCA",
     "year_begin":   2014,
     "year_end":     2018,

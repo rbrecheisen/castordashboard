@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="2762026b-f4b7-4569-8d9e-bc8d4780d62b" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO" beforeDir="false" afterPath="$PROJECT_DIR$/TODO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/castordashboard/dashboard/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/castordashboard/dashboard/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/castordashboard/etl/script_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/castordashboard/etl/script_runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/castordashboard/etl/scripts.py" beforeDir="false" afterPath="$PROJECT_DIR$/castordashboard/etl/scripts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/params.json" beforeDir="false" afterPath="$PROJECT_DIR$/tests/params.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,31 +21,31 @@
       <file leaf-file-name="script_runner.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/castordashboard/etl/script_runner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+            <state relative-caret-position="-464">
+              <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="scripts.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/castordashboard/etl/scripts.py">
+      <file leaf-file-name="TODO" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TODO">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1083">
-              <caret line="26" column="35" lean-forward="true" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
+            <state relative-caret-position="240">
+              <caret line="16" selection-start-line="16" selection-end-line="16" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="params.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/params.json">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/castordashboard/dashboard/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="600">
+              <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_etl.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test_etl.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/test_etl.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-618">
@@ -73,24 +75,24 @@
         <option value="$PROJECT_DIR$/castordashboard/utils.py" />
         <option value="$PROJECT_DIR$/tests/test_castordashboard.py" />
         <option value="$PROJECT_DIR$/tests/test_dashboard.py" />
-        <option value="$PROJECT_DIR$/castordashboard/dashboard/main.py" />
         <option value="$PROJECT_DIR$/tests/main.py" />
-        <option value="$PROJECT_DIR$/TODO" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/castordashboard/etl/main.py" />
         <option value="$PROJECT_DIR$/tests/test_etl.py" />
-        <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/castordashboard/etl/__init__.py" />
         <option value="$PROJECT_DIR$/tests/run_etl.sh" />
         <option value="$PROJECT_DIR$/tests/params.json" />
-        <option value="$PROJECT_DIR$/castordashboard/etl/script_runner.py" />
         <option value="$PROJECT_DIR$/castordashboard/etl/scripts.py" />
+        <option value="$PROJECT_DIR$/castordashboard/etl/script_runner.py" />
+        <option value="$PROJECT_DIR$/TODO" />
+        <option value="$PROJECT_DIR$/setup.py" />
+        <option value="$PROJECT_DIR$/castordashboard/dashboard/main.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="683" />
-    <option name="y" value="167" />
+    <option name="x" value="610" />
+    <option name="y" value="184" />
     <option name="width" value="1678" />
     <option name="height" value="1146" />
   </component>
@@ -114,6 +116,12 @@
               <item name="castordashboard" type="b2602c69:ProjectViewProjectNode" />
               <item name="castordashboard" type="462c0819:PsiDirectoryNode" />
               <item name="castordashboard" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="castordashboard" type="b2602c69:ProjectViewProjectNode" />
+              <item name="castordashboard" type="462c0819:PsiDirectoryNode" />
+              <item name="castordashboard" type="462c0819:PsiDirectoryNode" />
+              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="castordashboard" type="b2602c69:ProjectViewProjectNode" />
@@ -156,7 +164,25 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.script_runner">
+  <component name="RunManager" selected="Python.dashboard">
+    <configuration name="dashboard" type="PythonConfigurationType" factoryName="Python">
+      <module name="castordashboard" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/.virtualenvs/research/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/castordashboard" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/.virtualenvs/research/bin/bokeh" />
+      <option name="PARAMETERS" value="serve --show dashboard" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="script_runner" type="PythonConfigurationType" factoryName="Python">
       <module name="castordashboard" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -209,6 +235,7 @@
     </configuration>
     <list>
       <item itemvalue="Python.script_runner" />
+      <item itemvalue="Python.dashboard" />
       <item itemvalue="Python.tests:main" />
       <item itemvalue="Python tests.py.test in test_etl.py" />
     </list>
@@ -259,8 +286,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="683" y="167" width="1678" height="1146" extended-state="0" />
-    <editor active="true" />
+    <frame x="610" y="184" width="1678" height="1146" extended-state="0" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info id="DB Browser" />
@@ -269,7 +295,7 @@
       <window_info anchor="bottom" id="Run" order="2" weight="0.5462345" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32983795" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.24499524" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.24499524" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21363911" />
       <window_info id="Project Explorer" />
       <window_info id="Job Explorer" />
@@ -337,13 +363,6 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Library/Caches/PyCharmCE2018.1/python_stubs/-1547931332/time.py" />
-    <entry file="file://$PROJECT_DIR$/TODO">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="9" lean-forward="true" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -370,13 +389,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="56" selection-start-line="56" selection-end-line="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/castordashboard/etl/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -391,20 +403,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/params.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/castordashboard/etl/scripts.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1083">
-          <caret line="26" column="35" lean-forward="true" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.virtualenvs/research/lib/python3.6/site-packages/barbell2/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -412,10 +410,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/castordashboard/etl/script_runner.py">
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharmCE2018.1/python_stubs/2036915548/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+        <state relative-caret-position="255">
+          <caret line="169" column="4" selection-start-line="169" selection-start-column="4" selection-end-line="169" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/castordashboard/etl/scripts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1083">
+          <caret line="26" column="35" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -423,6 +428,41 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-618">
           <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/params.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/castordashboard/etl/script_runner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-464">
+          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TODO">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="107">
+          <caret line="14" column="53" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/castordashboard/dashboard/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
         </state>
       </provider>
     </entry>

@@ -13,6 +13,9 @@ class ScriptRunner:
         self.script = None
         self.logger = Logger(prefix='log_etl')
 
+    def check_params(self):
+        pass
+
     @staticmethod
     def get_time_period_in_secs(time_period):
         if isinstance(time_period, int):
@@ -77,6 +80,7 @@ def main():
     parser.add_argument('--params',
                         help='Full path to JSON parameter file (default: params.json)',
                         default='params.json')
+    parser.add_argument('--check_params', help='Check parameters')
     args = parser.parse_args()
 
     if args.params is None:
@@ -93,7 +97,11 @@ def main():
 
     runner = ScriptRunner()
     runner.script = script(runner, params)
-    runner.execute()
+
+    if args.check_params is not None:
+        runner.check_params()
+    else:
+        runner.execute()
 
 
 if __name__ == '__main__':
