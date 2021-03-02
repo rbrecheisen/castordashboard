@@ -109,12 +109,13 @@ def test_main():
         json.dump({
             'script': 'RetrieveProcedureCountsPerQuarterScript',
             'study_name': 'ESPRESSO_v2.0_DPCA',
+            'field_name': 'dpca_datok',
             'output_dir': '/tmp/castordashboard',
             'output_json': 'histogram_dpca.json',
             'use_cache': False,
             'verbose': False,
         }, f)
 
-    sys.argv = ['script_runner.py', 'params.json']
+    sys.argv = ['script_runner.py']
 
     script_runner.main()

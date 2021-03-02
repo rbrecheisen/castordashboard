@@ -63,12 +63,21 @@ def main():
     parser.add_argument('--params',
                         help='Full path to JSON parameter file (default: params.json)',
                         default='params.json')
+    parser.add_argument('--interval',
+                        help='Interval (secs) to wait before running script again (default: 0)',
+                        default=0)
+    parser.add_argument('--time_period',
+                        help='Time period (secs) to let script running (default: 0)',
+                        default=0)
+    parser.add_argument('--script_module',
+                        help='Path to Python module containing scripts',
+                        default='castordashboard.etl.scripts')
     args = parser.parse_args()
     with open(args.params, 'r') as f:
         params = json.load(f)
     params = SimpleNamespace(**params)
-    script = getattr(importlib.import_module('castordashboard.etl.scripts'), params.script)
-    runner = ScriptRunner()
+    script = getattr(importlib.import_module(params.script_module), params.script)
+    runner = ScriptRunner(params.interval, params.time_period)
     runner.script = script(runner, params)
     runner.execute()
 
