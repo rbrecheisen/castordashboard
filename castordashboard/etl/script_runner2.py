@@ -53,7 +53,7 @@ class ScriptRunner:
 
 
 class Script:
-
+    """ The script knows how to connect to Castor and extract the data it needs."""
     def __init__(self, name, runner, params):
         self.name = name
         self.runner = runner
