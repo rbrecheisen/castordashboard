@@ -44,8 +44,8 @@ setup(
     setup_requires=setup_requirements,
     entry_points={
         'console_scripts': [
-            'cd_etl=castordashboard.etl.script_runner:main',
-            'cd_dashboard=castordashboard.dashboard.main:main',
+            'demo.etl=castordashboard.etl.script_runner:main',
+            'demo.dashboard=castordashboard.dashboard.main:main',
         ],
     },
     test_suite='tests',
