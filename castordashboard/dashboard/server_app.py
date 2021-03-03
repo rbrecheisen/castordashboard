@@ -91,9 +91,9 @@ def make_document(doc):
 
 
 def main():
-    server = Server({'/': make_document}, port=params.port_nr, bokeh_options={
-        'allow-websocket-origin': params.websocket_origin,
-    })
+    p = params.port_nr
+    print('Running server at port {}...'.format(p))
+    server = Server({'/': make_document}, port=p)
     server.start()
     server.io_loop.add_callback(server.show, '/')
     server.io_loop.start()
