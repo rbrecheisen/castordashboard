@@ -30,7 +30,7 @@ if params is None:
         'port_nr': 5006
     }
     print('Could not find params.json. Using defaults...')
-    print(json.dumps(params))
+    print(json.dumps(params, indent=4))
 params = SimpleNamespace(**params)
 
 
