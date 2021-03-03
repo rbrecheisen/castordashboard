@@ -90,14 +90,11 @@ def make_document(doc):
     doc.add_root(column(p))
 
 
-server = Server({'/': make_document}, port=params.port_nr, bokeh_options={
-    'allow-websocket-origin': params.websocket_origin,
-})
-
-server.start()
-
-
 def main():
+    server = Server({'/': make_document}, port=params.port_nr, bokeh_options={
+        'allow-websocket-origin': params.websocket_origin,
+    })
+    server.start()
     server.io_loop.add_callback(server.show, '/')
     server.io_loop.start()
 
