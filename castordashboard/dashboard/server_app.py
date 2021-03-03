@@ -86,7 +86,7 @@ def make_document(doc):
     p.legend.location = "top_left"
     p.legend.orientation = "horizontal"
 
-    doc.title = "Hello, world!"
+    doc.title = 'Dashboard HPB'
     doc.add_root(column(p))
 
 
