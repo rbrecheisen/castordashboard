@@ -45,11 +45,9 @@ setup(
     entry_points={
         'console_scripts': [
             'castordashboard.etl=castordashboard.etl.script_runner:main',
+            'castordashboard.dashboard=castordashboard.dashboard.server_app:main',
         ],
     },
-    scripts=[
-        'scripts/castordashboard.dashboard',
-    ],
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/rbrecheisen/castordashboard',

@@ -1,12 +1,25 @@
 import os
 import json
 
+from types import SimpleNamespace
+
 from bokeh.server.server import Server
-from bokeh.application import Application
-from bokeh.application.handlers.function import FunctionHandler
 from bokeh.layouts import column
 from bokeh.models import ColumnDataSource
 from bokeh.plotting import figure
+
+
+def load_params(file_path='params.json'):
+    if os.path.isfile(file_path):
+        with open(file_path, 'r') as f:
+            return json.load(f)
+    return None
+
+
+params = load_params()
+if params is None:
+    raise RuntimeError('Could not find params.json')
+params = SimpleNamespace(**params)
 
 
 def load_json(file_path):
@@ -34,11 +47,14 @@ def find_latest_finished_dir(root_dir):
 
 def make_document(doc):
 
-    latest_dir = find_latest_finished_dir('/tmp/castordashboard')
-    histogram = load_json(os.path.join(latest_dir, 'histogram_dpca.json'))
+    latest_dir = find_latest_finished_dir(params.output_dir)
+
+    histogram = load_json(os.path.join(latest_dir, params.output_json))
+
     quarters = histogram['quarters']
     comp_y = histogram['comp_y']
     comp_n = histogram['comp_n']
+
     colors = ['#718dbf', '#e84d60']
 
     source = ColumnDataSource(data={
@@ -74,12 +90,8 @@ def make_document(doc):
     doc.add_root(column(p))
 
 
-# apps = {'/': Application(FunctionHandler(make_document))}
-# server = Server(apps, port=5000)
-# server.start()
-
-server = Server({'/': make_document}, port=5006, bokeh_options={
-    'allow-websocket-origin': '137.120.191.233:5006'
+server = Server({'/': make_document}, port=params.port_nr, bokeh_options={
+    'allow-websocket-origin': params.websocket_origin,
 })
 
 server.start()
