@@ -18,7 +18,19 @@ def load_params(file_path='params.json'):
 
 params = load_params()
 if params is None:
-    raise RuntimeError('Could not find params.json')
+    params = {
+        'script': 'RetrieveProcedureCountsAndComplicationsPerQuarterScript',
+        'study_name': 'ESPRESSO_v2.0_DPCA',
+        'surgery_date_field_name': 'dpca_datok',
+        'complications_field_name': 'dpca_compl',
+        'output_dir': '/tmp/castordashboard',
+        'output_json': 'histogram_dpca.json',
+        'use_cache': True,
+        'verbose': True,
+        'port_nr': 5006
+    }
+    print('Could not find params.json. Using defaults...')
+    print(json.dumps(params))
 params = SimpleNamespace(**params)
 
 
