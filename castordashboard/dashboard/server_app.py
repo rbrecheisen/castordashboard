@@ -64,15 +64,15 @@ def make_document(doc):
     histogram = load_json(os.path.join(latest_dir, params.output_json))
 
     quarters = histogram['quarters']
-    comp_y = histogram['comp_y']
     comp_n = histogram['comp_n']
+    comp_y = histogram['comp_y']
 
     colors = ['#718dbf', '#e84d60']
 
     source = ColumnDataSource(data={
         'quarters': quarters,
-        'comp_y': comp_y,
         'comp_n': comp_n,
+        'comp_y': comp_y,
     })
 
     d = latest_dir.split(os.path.sep)[-1]
