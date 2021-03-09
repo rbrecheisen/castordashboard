@@ -84,12 +84,12 @@ def make_document(doc):
     )
 
     p.vbar_stack(
-        stackers=['comp_y', 'comp_n'],
+        stackers=['comp_n', 'comp_y'],
         x='quarters',
         width=0.9,
         color=colors,
         source=source,
-        legend_label=['Complications YES', 'Complications NO'])
+        legend_label=['Complications NO', 'Complications YES'])
 
     p.xaxis.major_label_orientation = 'vertical'
     p.y_range.start = 0
