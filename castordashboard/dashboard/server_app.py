@@ -75,10 +75,12 @@ def make_document(doc):
         'comp_n': comp_n,
     })
 
+    d = latest_dir.split(os.path.sep)[-1]
+
     p = figure(
         x_range=quarters,
         plot_width=1000, plot_height=500,
-        title='Pancreatic procedure counts and complications per quarter',
+        title='Pancreatic procedure counts and complications per quarter ({})'.format(d),
     )
 
     p.vbar_stack(

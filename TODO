@@ -1,19 +1,2 @@
 TODO
 ====
-
-ETL
----
-
-    - Connect to Castor once and retrieve dashboard data
-    - Add timing info for start/stop script
-    - Add check_params function to script
-
-    x Connect to Castor every 5 seconds and retrieve list of studies
-    x Deploy 1st version with dummy script
-
-Dashboard
----------
-
-    - Lookup most recent output directory histogram data
-
-    x Implement 1st version
