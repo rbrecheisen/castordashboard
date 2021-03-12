@@ -1,59 +1,11 @@
-import os
-import json
-import datetime
-
-from types import SimpleNamespace
 from barbell2.castorclient import CastorClient
+from . import BaseScript
 
 
-class Script:
+class RetrieveProcedureCountsAndComplicationsPerQuarterScript(BaseScript):
 
     def __init__(self, name, runner, params):
-        self.name = name
-        self.runner = runner
-        self.params = params
-        if isinstance(self.params, dict):
-            self.params = SimpleNamespace(**params)
-
-    def save_to_json(self, data):
-        os.makedirs(self.params.output_dir, exist_ok=True)
-        now = datetime.datetime.now()
-        timestamp = '{}'.format(now.strftime('%Y%m%d%H%M%S'))
-        os.makedirs(os.path.join(self.params.output_dir, timestamp), exist_ok=True)
-        output_dir = os.path.join(self.params.output_dir, timestamp)
-        with open(os.path.join(output_dir, self.params.output_json), 'w') as f:
-            json.dump(data, f)
-        os.system('touch {}'.format(os.path.join(output_dir, 'finished.txt')))
-
-    def execute(self):
-        raise NotImplementedError()
-
-
-class DummyScript(Script):
-
-    def __init__(self, runner, params):
-        super(DummyScript, self).__init__(self.__class__, runner, params)
-
-    def execute(self):
-        self.runner.logger.print(json.dumps(vars(self.params), indent=4))
-
-
-class RetrieveStudyListScript(Script):
-
-    def __init__(self, runner, params):
-        super(RetrieveStudyListScript, self).__init__(self.__class__, runner, params)
-
-    def execute(self):
-        client = CastorClient()
-        study_list = client.get_studies()
-        for study in study_list:
-            self.runner.logger.print(study)
-
-
-class RetrieveProcedureCountsAndComplicationsPerQuarterScript(Script):
-
-    def __init__(self, runner, params):
-        super(RetrieveProcedureCountsAndComplicationsPerQuarterScript, self).__init__(self.__class__, runner, params)
+        super(RetrieveProcedureCountsAndComplicationsPerQuarterScript, self).__init__(name, runner, params)
 
     @staticmethod
     def get_numerical_representation(date_str):
@@ -105,14 +57,6 @@ class RetrieveProcedureCountsAndComplicationsPerQuarterScript(Script):
                             histogram[y][q]['comp_y'] += 1
                         else:
                             histogram[y][q]['comp_n'] += 1
-        # for d in surgery_dates:
-        #     y = self.get_year(d)
-        #     m = str(self.get_month(d))
-        #     if y in histogram.keys():
-        #         for q in histogram[y].keys():
-        #             x = q.split('_')
-        #             if m in x:
-        #                 histogram[y][q] += 1
         return histogram
 
     @staticmethod
@@ -134,27 +78,23 @@ class RetrieveProcedureCountsAndComplicationsPerQuarterScript(Script):
                 histogram_new['quarters'].append(q)
                 histogram_new['comp_y'].append(histogram[y][k]['comp_y'])
                 histogram_new['comp_n'].append(histogram[y][k]['comp_n'])
-        # for y in histogram.keys():
-        #     for k in histogram[y].keys():
-        #         q = self.get_quarter(k)
-        #         histogram_new['{}_{}'.format(y, q)] = histogram[y][k]
         return histogram_new
 
     def get_surgery_dates_and_complications(self):
         try:
-            use_cache = self.params.use_cache
+            use_cache = self.params['use_cache']
         except AttributeError:
             use_cache = True
         try:
-            verbose = self.params.verbose
+            verbose = self.params['verbose']
         except AttributeError:
             verbose = False
         client = CastorClient()
-        study_id = client.get_study_id(self.params.study_name)
+        study_id = client.get_study_id(self.script_params['study_name'])
         fields = client.get_fields(study_id, use_cache=use_cache, verbose=verbose)
-        surgery_date_field_name = self.params.surgery_date_field_name
+        surgery_date_field_name = self.script_params['surgery_date_field_name']
         surgery_date_field_id = client.get_field_id(surgery_date_field_name, fields)
-        complications_field_name = self.params.complications_field_name
+        complications_field_name = self.script_params['complications_field_name']
         complications_field_id = client.get_field_id(complications_field_name, fields)
         records = client.get_records(study_id, use_cache=use_cache, verbose=verbose)
         surgery_dates, complications = [], []
@@ -170,18 +110,18 @@ class RetrieveProcedureCountsAndComplicationsPerQuarterScript(Script):
                     self.runner.logger.print('{}: surgery_date = {}, complications = {}'.format(record['id'], d, c))
         return surgery_dates, complications
 
-    def execute(self):
+    def execute(self, output_dir):
         surgery_dates, complications = self.get_surgery_dates_and_complications()
         earliest_date, latest_date = self.get_earliest_and_latest_date(surgery_dates)
         earliest_year, latest_year = self.get_year(earliest_date), self.get_year(latest_date)
-        try:
-            year_begin = self.params.year_begin
-        except AttributeError:
+        if 'year_begin' in self.script_params.keys():
+            year_begin = self.script_params['year_begin']
+        else:
             year_begin = earliest_year
-        try:
-            year_end = self.params.year_end
-        except AttributeError:
+        if 'year_end' in self.script_params.keys():
+            year_end = self.script_params['year_end']
+        else:
             year_end = latest_year
         histogram = self.get_histogram(year_begin, year_end, surgery_dates, complications)
         histogram = self.flatten_histogram(histogram)
-        self.save_to_json(histogram)
+        self.save_to_json(histogram, output_dir)

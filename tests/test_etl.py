@@ -1,11 +1,11 @@
 import os
 
-from types import SimpleNamespace
-
-from castordashboard.etl import ScriptRunner
-from castordashboard.etl import DummyScript
-from castordashboard.etl import RetrieveStudyListScript
-from castordashboard.etl import RetrieveProcedureCountsAndComplicationsPerQuarterScript
+# from types import SimpleNamespace
+#
+# from castordashboard.etl import ScriptRunner
+# from castordashboard.etl import DummyScript
+# from castordashboard.etl import RetrieveStudyListScript
+# from castordashboard.etl import RetrieveProcedureCountsAndComplicationsPerQuarterScript
 
 
 def find_latest_log(prefix):
@@ -118,23 +118,30 @@ def test_main():
 
     import json
     import sys
+
     from castordashboard.etl import script_runner
 
     with open('params.json', 'w') as f:
         json.dump({
-            'script': 'RetrieveProcedureCountsAndComplicationsPerQuarterScript',
-            'study_name': 'ESPRESSO_v2.0_DPCA',
-            'surgery_date_field_name': 'dpca_datok',
-            'complications_field_name': 'dpca_compl',
+            'scripts': {
+                'DummyScript': {},
+                'RetrieveStudyListScript': {},
+                'RetrieveProcedureCountsAndComplicationsPerQuarterScript': {
+                    'study_name': 'ESPRESSO_v2.0_DPCA',
+                    'surgery_date_field_name': 'dpca_datok',
+                    'complications_field_name': 'dpca_compl',
+                },
+            },
+            'websocket_origin': '137.120.191.233:5006',
+            'port_nr': 5006,
             'output_dir': '/tmp/castordashboard',
-            'output_json': 'histogram_dpca.json',
             'use_cache': True,
             'verbose': True,
         }, f)
 
-    sys.argv = ['script_runner.py']
+    sys.argv = ['script_runner.py', 'params.json']
     script_runner.main()
 
-    d = find_latest_dir('/tmp/castordashboard')
-    with open(os.path.join(d, 'histogram_dpca.json'), 'r') as f:
-        print(json.dumps(json.load(f), indent=4))
+    # d = find_latest_dir('/tmp/castordashboard')
+    # with open(os.path.join(d, 'histogram_dpca.json'), 'r') as f:
+    #     print(json.dumps(json.load(f), indent=4))
