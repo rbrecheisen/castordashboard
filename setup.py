@@ -48,6 +48,9 @@ setup(
             'castordashboard.dashboard=castordashboard.dashboard.server_app:main',
         ],
     },
+    scripts=[
+        'scripts/run_castordashboard_etl.sh',
+    ],
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/rbrecheisen/castordashboard',
