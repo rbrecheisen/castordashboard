@@ -89,7 +89,7 @@ class RetrieveProcedureCountsAndComplicationsPerQuarterScript(BaseScript):
             verbose = self.params['verbose']
         else:
             verbose = False
-        client = CastorClient()
+        client = CastorClient(log_dir=self.params['log_dir'])
         study_id = client.get_study_id(self.script_params['study_name'])
         fields = client.get_fields(study_id, use_cache=use_cache, verbose=verbose)
         surgery_date_field_name = self.script_params['surgery_date_field_name']
