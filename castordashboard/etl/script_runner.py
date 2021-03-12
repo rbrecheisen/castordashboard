@@ -12,7 +12,8 @@ class ScriptRunner:
     def __init__(self, params):
         self.params = params
         self.scripts = []
-        self.logger = Logger(prefix='log_etl')
+        os.makedirs(params['log_dir'], exist_ok=True)
+        self.logger = Logger(prefix='log_etl', to_dir=params['log_dir'])
 
     def get_output_dir(self):
         os.makedirs(self.params['output_dir'], exist_ok=True)
