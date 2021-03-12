@@ -29,14 +29,25 @@ if os.environ.get('DEBUG', 'true'):
 else:
     DEBUG = False
 
-
 ALLOWED_HOSTS = [
-    '137.120.191.233',
     'localhost',
     '127.0.0.1',
     '0.0.0.0',
     'app',
 ]
+
+result = os.system('which ifconfig>/dev/null')
+if result == 0:
+    os.system('ifconfig > ifconfig.txt')
+    found = False
+    with open('ifconfig.txt', 'r') as f:
+        for x in f.readlines():
+            line = x.strip()
+            if 'eno1' in line:
+                found = True
+            if found and 'inet ' in line:
+                ALLOWED_HOSTS.extend([line.split(' ')[1]])
+    os.system('rm ifconfig.txt')
 
 
 # Application definition
