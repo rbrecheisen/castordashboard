@@ -64,30 +64,32 @@ def make_document(doc):
     histogram = load_json(os.path.join(latest_dir, params.output_json))
 
     quarters = histogram['quarters']
-    comp_y = histogram['comp_y']
     comp_n = histogram['comp_n']
+    comp_y = histogram['comp_y']
 
     colors = ['#718dbf', '#e84d60']
 
     source = ColumnDataSource(data={
         'quarters': quarters,
-        'comp_y': comp_y,
         'comp_n': comp_n,
+        'comp_y': comp_y,
     })
+
+    d = latest_dir.split(os.path.sep)[-1]
 
     p = figure(
         x_range=quarters,
         plot_width=1000, plot_height=500,
-        title='Pancreatic procedure counts and complications per quarter',
+        title='Pancreatic procedure counts and complications per quarter ({})'.format(d),
     )
 
     p.vbar_stack(
-        stackers=['comp_y', 'comp_n'],
+        stackers=['comp_n', 'comp_y'],
         x='quarters',
         width=0.9,
         color=colors,
         source=source,
-        legend_label=['Complications YES', 'Complications NO'])
+        legend_label=['Complications NO', 'Complications YES'])
 
     p.xaxis.major_label_orientation = 'vertical'
     p.y_range.start = 0
