@@ -26,7 +26,7 @@ services:
     container_name: dashboard_etl
     command: bash -c "python script_runner.py"
     volumes:
-      - ./etl/src
+      - ./etl:/src
 volumes:
   data:
     driver: local
