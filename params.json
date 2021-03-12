@@ -8,7 +8,7 @@
             "complications_field_name": "dpca_compl"
         }
     },
-    "output_dir": "/tmp/castordashboard",
+    "output_dir": "./castordashboard_data",
     "use_cache": false,
     "verbose": true,
     "websocket_origin": "137.120.191.233:5006",

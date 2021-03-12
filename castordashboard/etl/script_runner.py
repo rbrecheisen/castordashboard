@@ -36,13 +36,45 @@ class ScriptRunner:
                 'Script finished after {} seconds'.format(elapsed_secs(start)))
         self.logger.print(
             'Elapsed overall: {} seconds'.format(elapsed_secs(start_overall)))
+        os.system('touch {}'.format(os.path.join(output_dir, 'finished.txt')))
+
+
+HELP = """
+Path to parameter file (default: params.json)
+
+Example parameter file:
+
+{
+    "scripts": {
+        "DummyScript": {},
+        "RetrieveStudyListScript": {},
+        "RetrieveProcedureCountsAndComplicationsPerQuarterScript": {
+            "study_name": "ESPRESSO_v2.0_DPCA",
+            "surgery_date_field_name": "dpca_datok",
+            "complications_field_name": "dpca_compl"
+        }
+    },
+    "output_dir": "./castordashboard_data",
+    "use_cache": false,
+    "verbose": true,
+    "websocket_origin": "137.120.191.233:5006",
+    "port_nr": 5006
+}
+
+The "scripts" item contains a dictionary of script (class) names as keys and various script-specific
+settings as values.  For example, the RetrieveProcedureCountsAndComplicationsPerQuarterScript script
+requires a study name to access the right study in Castor EDC.
+
+The other parameter settings specify where to store the script output JSON data. 
+"""
 
 
 def main():
 
-    if not os.path.isfile('params.json'):
-        raise RuntimeError('Missing params.json file!')
-    with open('params.json', 'r') as f:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--params', help=HELP, default='params.json')
+    args = parser.parse_args()
+    with open(args.params, 'r') as f:
         params = json.load(f)
 
     runner = ScriptRunner(params)
