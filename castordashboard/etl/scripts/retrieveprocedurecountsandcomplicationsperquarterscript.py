@@ -81,13 +81,13 @@ class RetrieveProcedureCountsAndComplicationsPerQuarterScript(BaseScript):
         return histogram_new
 
     def get_surgery_dates_and_complications(self):
-        try:
+        if 'use_cache' in self.params.keys():
             use_cache = self.params['use_cache']
-        except AttributeError:
-            use_cache = True
-        try:
+        else:
+            use_cache = False
+        if 'verbose' in self.params.keys():
             verbose = self.params['verbose']
-        except AttributeError:
+        else:
             verbose = False
         client = CastorClient()
         study_id = client.get_study_id(self.script_params['study_name'])
