@@ -40,10 +40,9 @@ class ScriptRunner:
 
 def main():
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('params', help='Path to params.json file')
-    args = parser.parse_args()
-    with open(args.params, 'r') as f:
+    if not os.path.isfile('params.json'):
+        raise RuntimeError('Missing params.json file!')
+    with open('params.json', 'r') as f:
         params = json.load(f)
 
     runner = ScriptRunner(params)
