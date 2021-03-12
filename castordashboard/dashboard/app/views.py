@@ -1,3 +1,6 @@
+import os
+import json
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -10,6 +13,35 @@ from bokeh.palettes import Spectral6
 from bokeh.transform import factor_cmap
 
 
+params = {
+    'output_dir': '/output/data',
+    'output_json': 'RetrieveProcedureCountsAndComplicationsPerQuarterScript.json',
+}
+
+
+def load_json(file_path):
+    if os.path.isfile(file_path):
+        with open(file_path, 'r') as f:
+            return json.load(f)
+    return None
+
+
+def find_latest_finished_dir(root_dir):
+    ld = None
+    max_x = 0
+    for d in os.listdir(root_dir):
+        try:
+            x = int(d)
+            d = os.path.join(root_dir, d)
+            if os.path.isfile(os.path.join(d, 'finished.txt')) and x > max_x:
+                ld = d
+                max_x = x
+        except ValueError:
+            pass
+    print('Latest (finished) directory: {}'.format(ld))
+    return ld
+
+
 def register(request):
     context = {}
     form = UserCreationForm(request.POST or None)
@@ -20,6 +52,53 @@ def register(request):
             return redirect('dashboard')
     context['form'] = form
     return render(request, 'registration/register.html', context)
+
+
+@login_required
+def dashboard2(request):
+
+    latest_dir = find_latest_finished_dir(params['output_dir'])
+    d = latest_dir.split(os.path.sep)[-1]
+    histogram = load_json(os.path.join(latest_dir, params['output_json']))
+
+    quarters = histogram['quarters']
+    comp_n = histogram['comp_n']
+    comp_y = histogram['comp_y']
+
+    colors = ['#718dbf', '#e84d60']
+
+    source = ColumnDataSource(data={
+        'quarters': quarters,
+        'comp_n': comp_n,
+        'comp_y': comp_y,
+    })
+
+    p = figure(
+        x_range=quarters,
+        plot_width=1000, plot_height=500,
+        title='Pancreatic procedure counts and complications per quarter ({})'.format(d),
+    )
+
+    p.vbar_stack(
+        stackers=['comp_y', 'comp_n'],
+        x='quarters',
+        width=0.9,
+        color=colors,
+        source=source,
+        legend_label=['Complications YES', 'Complications NO'])
+
+    p.xaxis.major_label_orientation = 'vertical'
+    p.y_range.start = 0
+    p.x_range.range_padding = 0.1
+    p.xgrid.grid_line_color = None
+    p.axis.minor_tick_line_color = None
+    p.outline_line_color = None
+    p.legend.location = "top_left"
+    p.legend.orientation = "horizontal"
+
+    script, div = components(p)
+
+    return render(request, 'dashboard.html', {'script': script, 'div': div})
 
 
 @login_required

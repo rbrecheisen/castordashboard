@@ -1,5 +1,4 @@
 barbell2
-pytest
 numpy
 bokeh==2.3.0
 django==3.1.7

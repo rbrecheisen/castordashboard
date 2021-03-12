@@ -7,12 +7,12 @@ services:
       - "8000:8000"
     volumes:
       - ./dashboard:/src
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./dashboard/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./dashboard/app/static:/static
     depends_on:
       - web
   web:
-    build: .
+    build: ./dashboard
     image: brecheisen/dashboard_web:latest
     container_name: dashboard_web
     command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn dashboard.wsgi -b 0.0.0.0:8001"
@@ -20,5 +20,13 @@ services:
       - SECRET_KEY
     volumes:
       - ./dashboard:/src
-    stdin_open: true
-    tty: true
+  etl:
+    build: ./etl
+    image: brecheisen/dashboard_etl:latest
+    container_name: dashboard_etl
+    command: bash -c "python script_runner.py"
+    volumes:
+      - ./etl/src
+volumes:
+  data:
+    driver: local
