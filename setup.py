@@ -50,10 +50,6 @@ setup(
             'castordashboard.etl=castordashboard.etl.script_runner:main',
         ],
     },
-    scripts=[
-        'scripts/run_castordashboard_etl.sh',
-        'scripts/run_castordashboard_dashboard.sh',
-    ],
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/rbrecheisen/castordashboard',
