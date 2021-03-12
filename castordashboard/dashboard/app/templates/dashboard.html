@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="card" style="margin-top: 10px;">
+                <div class="card-header">Categories</div>
+                <div class="card-body">
+                    <p class="card-text">
+                        This is some text
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            {{ div | safe }}
+        </div>
+    </div>
+</div>
+{% endblock %}
