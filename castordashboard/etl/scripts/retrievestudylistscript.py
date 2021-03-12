@@ -1,4 +1,4 @@
-from barbell2.castorclient import CastorClient
+from barbell2_light.castorclient import CastorClient
 from . import BaseScript
 
 
