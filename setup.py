@@ -12,14 +12,10 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [
-    'barbell2',
-    'pytest',
-    'numpy',
-    'bokeh==2.3.0',
-    'django==3.1.7',
-    'django-session-security==2.6.6',
-]
+with open('castordashboard/requirements.txt', 'r') as f:
+    requirements = []
+    for line in f.readlines():
+        requirements.append(line.strip())
 
 setup_requirements = []
 
@@ -52,11 +48,11 @@ setup(
     entry_points={
         'console_scripts': [
             'castordashboard.etl=castordashboard.etl.script_runner:main',
-            'castordashboard.dashboard=castordashboard.dashboard.manage:main',
         ],
     },
     scripts=[
         'scripts/run_castordashboard_etl.sh',
+        'scripts/run_castordashboard_dashboard.sh',
     ],
     test_suite='tests',
     tests_require=test_requirements,
