@@ -1,4 +1,4 @@
-barbell2
+barbell2_light
 numpy
 bokeh==2.3.0
 django==3.1.7
