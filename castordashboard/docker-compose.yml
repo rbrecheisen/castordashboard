@@ -20,13 +20,17 @@ services:
       - SECRET_KEY
     volumes:
       - ./dashboard:/src
+      - ./params.json:/src/params.json
+      - etl_data:/data
   etl:
     build: ./etl
     image: brecheisen/dashboard_etl:latest
     container_name: dashboard_etl
-    command: bash -c "python script_runner.py"
+#    command: bash -c "python script_runner.py"
     volumes:
       - ./etl:/src
+      - ./params.json:/src/params.json
+      - etl_data:/data
 volumes:
-  data:
+  etl_data:
     driver: local

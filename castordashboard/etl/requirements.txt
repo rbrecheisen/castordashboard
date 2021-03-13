@@ -1,1 +1,1 @@
-barbell2_light
+barbell2_light==0.3.1
