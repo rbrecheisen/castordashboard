@@ -1,0 +1,15 @@
+{
+    "scripts": {
+        "RetrieveProcedureCountsAndComplicationsPerQuarterScript": {
+            "study_name": "ESPRESSO_v2.0_DPCA",
+            "surgery_date_field_name": "dpca_datok",
+            "complications_field_name": "dpca_compl"
+        }
+    },
+    "output_dir": "/data",
+    "log_dir": "/data/logs",
+    "use_cache": false,
+    "verbose": true,
+    "websocket_origin": "137.120.191.233:5006",
+    "port_nr": 5006
+}

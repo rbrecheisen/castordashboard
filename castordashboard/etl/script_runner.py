@@ -80,7 +80,7 @@ def main():
 
     runner = ScriptRunner(params)
     for script_name in params['scripts'].keys():
-        script = getattr(importlib.import_module('castordashboard.etl.scripts'), script_name)
+        script = getattr(importlib.import_module('scripts'), script_name)
         runner.scripts.append(script(script_name, runner, params))
     runner.execute()
 

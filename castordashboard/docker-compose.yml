@@ -20,17 +20,20 @@ services:
       - SECRET_KEY
     volumes:
       - ./dashboard:/src
-      - ./params.json:/src/params.json
       - etl_data:/data
+      - ./params.json:/data/params.json
   etl:
     build: ./etl
     image: brecheisen/dashboard_etl:latest
     container_name: dashboard_etl
-#    command: bash -c "python script_runner.py"
+    command: bash -c "python script_runner.py --param=/data/params.json"
+    environment:
+      - CASTOR_CLIENT_ID
+      - CASTOR_CLIENT_SECRET
     volumes:
       - ./etl:/src
-      - ./params.json:/src/params.json
       - etl_data:/data
+      - ./params.json:/data/params.json
 volumes:
   etl_data:
     driver: local
