@@ -3,3 +3,7 @@ numpy==1.20.1
 bokeh==2.3.0
 django==3.1.7
 django-session-security==2.6.6
+
+gunicorn
+uwsgi
+psycopg2
