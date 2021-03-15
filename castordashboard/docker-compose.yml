@@ -23,6 +23,8 @@ services:
       - ./dashboard:/src
       - etl_data:/data
       - ./params.json:/data/params.json
+    depends_on:
+      - db
   etl:
     build: ./etl
     image: brecheisen/dashboard_etl:latest
@@ -35,6 +37,18 @@ services:
       - ./etl:/src
       - etl_data:/data
       - ./params.json:/data/params.json
+  db:
+    restart: always
+    image: postgres:10.5-alpine
+    container_name: dashboard_postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
 volumes:
   etl_data:
+    driver: local
+  postgres_data:
     driver: local
