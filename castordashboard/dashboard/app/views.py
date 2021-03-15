@@ -53,7 +53,7 @@ def dashboard(request):
 
     params = load_json('/data/params.json')
     latest_dir = find_latest_finished_dir(params['output_dir'])
-    histogram = load_json(os.path.join(latest_dir, params['output_json']))
+    histogram = load_json(os.path.join(latest_dir, 'RetrieveProcedureCountsAndComplicationsPerQuarterScript.json'))
     timestamp = latest_dir.split(os.path.sep)[-1]
 
     quarters = histogram['quarters']
