@@ -13,12 +13,6 @@ from bokeh.palettes import Spectral6
 from bokeh.transform import factor_cmap
 
 
-params = {
-    'output_dir': '/output/data',
-    'output_json': 'RetrieveProcedureCountsAndComplicationsPerQuarterScript.json',
-}
-
-
 def load_json(file_path):
     if os.path.isfile(file_path):
         with open(file_path, 'r') as f:
@@ -55,11 +49,12 @@ def register(request):
 
 
 @login_required
-def dashboard2(request):
+def dashboard(request):
 
+    params = load_json('/data/params.json')
     latest_dir = find_latest_finished_dir(params['output_dir'])
-    d = latest_dir.split(os.path.sep)[-1]
     histogram = load_json(os.path.join(latest_dir, params['output_json']))
+    timestamp = latest_dir.split(os.path.sep)[-1]
 
     quarters = histogram['quarters']
     comp_n = histogram['comp_n']
@@ -76,7 +71,7 @@ def dashboard2(request):
     p = figure(
         x_range=quarters,
         plot_width=1000, plot_height=500,
-        title='Pancreatic procedure counts and complications per quarter ({})'.format(d),
+        title='Pancreatic procedure counts and complications per quarter ({})'.format(timestamp),
     )
 
     p.vbar_stack(
@@ -102,7 +97,7 @@ def dashboard2(request):
 
 
 @login_required
-def dashboard(request):
+def dashboard_old(request):
     fruits = ['Apples', 'Pears', 'Nectarines', 'Plums', 'Grapes', 'Strawberries']
     years = ['2015', '2016', '2017']
     data = {
