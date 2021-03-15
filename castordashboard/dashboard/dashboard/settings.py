@@ -6,9 +6,11 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+USE_SQLITE3 = True
 SQLITE3_DIR = os.environ.get('SQLITE3_DIR', None)
 if SQLITE3_DIR is None:
     SQLITE3_DIR = BASE_DIR
+    USE_SQLITE3 = False
 
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -87,10 +89,7 @@ DATABASE_CONFIGS = {
 }
 
 
-use_postgres = os.environ.get('USE_POSTGRES', 'false')
-
-
-if use_postgres is None or use_postgres == 'false':
+if USE_SQLITE3:
     DATABASES = {
         'default': DATABASE_CONFIGS['sqlite']
     }
