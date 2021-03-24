@@ -4,7 +4,7 @@ import argparse
 import importlib
 import datetime
 
-from barbell2_light.utils import Logger, current_time_secs, elapsed_secs
+from barbell2light.utils import Logger, current_time_secs, elapsed_secs
 
 
 class ScriptRunner:
