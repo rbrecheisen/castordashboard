@@ -1,11 +1,11 @@
-from barbell2_light.castorclient import CastorClient
+from barbell2light.castorclient import CastorClient
 from . import BaseScript
 
 
 class RetrieveProcedureCountsAndComplicationsPerQuarterScript(BaseScript):
 
-    def __init__(self, name, runner, params):
-        super(RetrieveProcedureCountsAndComplicationsPerQuarterScript, self).__init__(name, runner, params)
+    def __init__(self, name, logger, params):
+        super(RetrieveProcedureCountsAndComplicationsPerQuarterScript, self).__init__(name, logger, params)
 
     @staticmethod
     def get_numerical_representation(date_str):
@@ -90,11 +90,11 @@ class RetrieveProcedureCountsAndComplicationsPerQuarterScript(BaseScript):
         else:
             verbose = False
         client = CastorClient(log_dir=self.params['log_dir'])
-        study_id = client.get_study_id(self.script_params['study_name'])
+        study_id = client.get_study_id('ESPRESSO_v2.0_DPCA')
         fields = client.get_fields(study_id, use_cache=use_cache, verbose=verbose)
-        surgery_date_field_name = self.script_params['surgery_date_field_name']
+        surgery_date_field_name = 'dpca_datok'
         surgery_date_field_id = client.get_field_id(surgery_date_field_name, fields)
-        complications_field_name = self.script_params['complications_field_name']
+        complications_field_name = 'dpca_compl'
         complications_field_id = client.get_field_id(complications_field_name, fields)
         records = client.get_records(study_id, use_cache=use_cache, verbose=verbose)
         surgery_dates, complications = [], []
@@ -107,21 +107,15 @@ class RetrieveProcedureCountsAndComplicationsPerQuarterScript(BaseScript):
                     c = int(complications_data['value'])
                     surgery_dates.append(d)
                     complications.append(c)
-                    self.runner.logger.print('{}: surgery_date = {}, complications = {}'.format(record['id'], d, c))
+                    self.logger.print('{}: surgery_date = {}, complications = {}'.format(record['id'], d, c))
         return surgery_dates, complications
 
-    def execute(self, output_dir):
+    def execute(self):
         surgery_dates, complications = self.get_surgery_dates_and_complications()
         earliest_date, latest_date = self.get_earliest_and_latest_date(surgery_dates)
         earliest_year, latest_year = self.get_year(earliest_date), self.get_year(latest_date)
-        if 'year_begin' in self.script_params.keys():
-            year_begin = self.script_params['year_begin']
-        else:
-            year_begin = earliest_year
-        if 'year_end' in self.script_params.keys():
-            year_end = self.script_params['year_end']
-        else:
-            year_end = latest_year
+        year_begin = earliest_year
+        year_end = latest_year
         histogram = self.get_histogram(year_begin, year_end, surgery_dates, complications)
         histogram = self.flatten_histogram(histogram)
-        self.save_to_json(histogram, output_dir)
+        self.save_to_json(histogram, self.params['output_dir'])
