@@ -4,10 +4,10 @@ from barbell2light.castorclient import CastorClient
 from . import BaseScript
 
 
-class RetrieveProcedureComplicationsScript(BaseScript):
+class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
 
     def __init__(self, name, logger, params):
-        super(RetrieveProcedureComplicationsScript, self).__init__(name, logger, params)
+        super(RetrieveProcedureComplicationsPerQuarterScript, self).__init__(name, logger, params)
         self.client = CastorClient(log_dir=self.params['log_dir'])
         self.study_id = self.client.get_study_id('ESPRESSO_v2.0_DPCA')
         self.surgery_date_dpca = 'dpca_datok'

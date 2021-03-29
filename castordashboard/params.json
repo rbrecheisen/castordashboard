@@ -1,6 +1,6 @@
 {
     "scripts": [
-        "RetrieveProcedureCountsAndComplicationsPerQuarterScript"
+        "RetrieveProcedureComplicationsPerQuarterScript"
     ],
     "output_dir": "/data",
     "log_dir": "/data/logs",
