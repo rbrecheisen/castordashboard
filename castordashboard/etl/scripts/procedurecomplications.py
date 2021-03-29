@@ -128,14 +128,15 @@ class RetrieveProcedureComplicationsScript(BaseScript):
         records = self.client.get_records(self.study_id, use_cache=use_cache, verbose=verbose)
         option_groups = self.client.get_option_groups(self.study_id, verbose=verbose)
         data = self.get_data(fields, option_groups, records, use_cache=use_cache)
+        new_data = {'dpca': {}, 'dhba': {}}
         for proc_type in data['dpca'].keys():
             proc_data = data['dpca'][proc_type]
             date_begin, date_end = self.get_earliest_and_latest_date(proc_data['surgery_dates'])
             year_begin, year_end = self.get_year(date_begin), self.get_year(date_end)
             histogram = self.get_histogram(year_begin, year_end, proc_data['surgery_dates'], proc_data['complications'])
             histogram = self.flatten_histogram(histogram)
-            # TODO: I was here!
-        self.save_to_json(data, self.params['output_dir'])
+            new_data['dpca'][proc_type] = histogram
+        self.save_to_json(new_data, self.params['output_dir'])
 
 # dpca_typok
 # ==========
