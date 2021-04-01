@@ -6,4 +6,4 @@
 export CASTOR_CLIENT_ID=$(cat /home/local/UNIMAAS/r.brecheisen/castorclientid.txt)
 export CASTOR_CLIENT_SECRET=$(cat /home/local/UNIMAAS/r.brecheisen/castorclientsecret.txt)
 
-/usr/local/bin/docker-compose run -e PYTHONPATH=/src etl bash -c "python script_runner.py --param=/src/params.json"
+/usr/local/bin/docker-compose run etl bash -c "python script_runner.py --param=/src/params.json"
