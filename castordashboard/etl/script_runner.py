@@ -11,9 +11,18 @@ class ScriptRunner:
 
     def __init__(self, params):
         self.params = params
-        self.scripts = []
         os.makedirs(params['log_dir'], exist_ok=True)
         self.logger = Logger(prefix='log_etl', to_dir=params['log_dir'])
+        self.scripts = self.load_scripts(self.logger, self.params)
+
+    @staticmethod
+    def load_scripts(logger, params):
+        scripts = []
+        if 'scripts' in params.keys():
+            for script_name in params['scripts']:
+                script = getattr(importlib.import_module('scripts'), script_name)
+                scripts.append(script(script_name, logger, params))
+        return scripts
 
     def get_output_dir(self):
         os.makedirs(self.params['output_dir'], exist_ok=True)
@@ -40,48 +49,15 @@ class ScriptRunner:
         os.system('touch {}'.format(os.path.join(output_dir, 'finished.txt')))
 
 
-HELP = """
-Path to parameter file (default: params.json)
-
-Example parameter file:
-
-{
-    "scripts": {
-        "DummyScript": {},
-        "RetrieveStudyListScript": {},
-        "RetrieveProcedureCountsAndComplicationsPerQuarterScript": {
-            "study_name": "ESPRESSO_v2.0_DPCA",
-            "surgery_date_field_name": "dpca_datok",
-            "complications_field_name": "dpca_compl"
-        }
-    },
-    "output_dir": "./castordashboard_data",
-    "use_cache": false,
-    "verbose": true,
-    "websocket_origin": "137.120.191.233:5006",
-    "port_nr": 5006
-}
-
-The "scripts" item contains a dictionary of script (class) names as keys and various script-specific
-settings as values.  For example, the RetrieveProcedureCountsAndComplicationsPerQuarterScript script
-requires a study name to access the right study in Castor EDC.
-
-The other parameter settings specify where to store the script output JSON data. 
-"""
-
-
 def main():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--params', help=HELP, default='params.json')
+    parser.add_argument('--params', help='JSON parameter file', default='./params.json')
     args = parser.parse_args()
     with open(args.params, 'r') as f:
         params = json.load(f)
 
     runner = ScriptRunner(params)
-    for script_name in params['scripts'].keys():
-        script = getattr(importlib.import_module('scripts'), script_name)
-        runner.scripts.append(script(script_name, runner, params))
     runner.execute()
 
 
