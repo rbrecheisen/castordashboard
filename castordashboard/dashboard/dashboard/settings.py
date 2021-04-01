@@ -6,17 +6,16 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-USE_SQLITE3 = True
 SQLITE3_DIR = os.environ.get('SQLITE3_DIR', None)
-if SQLITE3_DIR is None:
-    SQLITE3_DIR = BASE_DIR
-    USE_SQLITE3 = False
 
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
-if os.environ.get('DEBUG', 'true'):
+PARAMS_FILE_PATH = os.environ.get('PARAMS_FILE_PATH', 'params.json')
+
+
+if os.environ.get('DEBUG', False):
     DEBUG = True
 else:
     DEBUG = False
@@ -73,29 +72,23 @@ TEMPLATES = [
 WSGI_APPLICATION = 'dashboard.wsgi.application'
 
 
-DATABASE_CONFIGS = {
-    'postgres': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
-    },
-    'sqlite': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(SQLITE3_DIR, 'db.sqlite3'),
-    }
-}
-
-
-if USE_SQLITE3:
+if SQLITE3_DIR is not None:
     DATABASES = {
-        'default': DATABASE_CONFIGS['sqlite']
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(SQLITE3_DIR, 'db.sqlite3'),
+        }
     }
 else:
     DATABASES = {
-        'default': DATABASE_CONFIGS['postgres']
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'db',
+            'PORT': 5432,
+        }
     }
 
 

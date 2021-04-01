@@ -1,9 +1,10 @@
 {
     "scripts": [
-        "RetrieveProcedureComplicationsPerQuarterScript"
+        "RetrieveProcedureComplicationsPerQuarterScript",
+        "RetrieveProcedureCountsAndComplicationsPerQuarterScript"
     ],
-    "output_dir": "/data",
-    "log_dir": "/data/logs",
+    "output_dir": "/tmp/castordashboard",
+    "log_dir": "/tmp/castordashboard/logs",
     "use_cache": false,
     "verbose": true,
     "websocket_origin": "137.120.191.233:5006",

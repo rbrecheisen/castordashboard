@@ -1,5 +1,3 @@
-import os
-import json
 from barbell2light.castorclient import CastorClient
 from . import BaseScript
 
@@ -7,12 +5,15 @@ from . import BaseScript
 class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
 
     def __init__(self, name, logger, params):
+
         super(RetrieveProcedureComplicationsPerQuarterScript, self).__init__(name, logger, params)
         self.client = CastorClient(log_dir=self.params['log_dir'])
         self.study_id = self.client.get_study_id('ESPRESSO_v2.0_DPCA')
+
         # DPCA
         self.surgery_date_dpca = 'dpca_datok'
         self.complications_dpba = 'dpca_compl'
+
         # DHBA
         self.surgery_date_dhba = 'dhba_datok1'  # dhba_datok = date resection primary tumor
         self.complications_dhba = 'dhba_compl'
@@ -93,16 +94,8 @@ class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
                 histogram_new['comp_n'].append(histogram[y][k]['comp_n'])
         return histogram_new
 
-    def get_data(self, fields, option_groups, records, use_cache=True):
+    def get_data(self, fields, option_groups, records):
 
-        # Check if caching is enabled, and the cache file exists. If so,
-        # load the data directly from the cache
-        if use_cache and os.path.isfile('/tmp/castordashboard/cache.json'):
-            with open('/tmp/castordashboard/cache.json', 'r') as f:
-                return json.load(f)
-
-        # No cache so we retrieve the data from Castor. Let's initialize an empty
-        # data dictionary (DPCA only for now)
         data = {'dpca': {}}
 
         # Get field IDs for the DPCA variables of interest
@@ -151,20 +144,25 @@ class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
 
                         self.logger.print('{}: surgery_date = {}, complications = {}'.format(record['id'], d, c))
 
-        # We have collected the data so now write it to JSON cache
-        with open('/tmp/castordashboard/cache.json', 'w') as f:
-            json.dump(data, f, indent=4)
-
         return data
 
     def execute(self):
-        use_cache = True
+
+        # Get Castor field definitions. Use cache if configured
+        use_cache = True if 'use_cache' in self.params.keys() and self.params['use_cache'] else False
         verbose = True if 'verbose' in self.params.keys() and self.params['verbose'] else False
         fields = self.client.get_fields(self.study_id, use_cache=use_cache, verbose=verbose)
+
+        # Get Castor records and option groups (from cache is configured)
         records = self.client.get_records(self.study_id, use_cache=use_cache, verbose=verbose)
         option_groups = self.client.get_option_groups(self.study_id, verbose=verbose)
-        data = self.get_data(fields, option_groups, records, use_cache=use_cache)
+
+        # Get Castor data. We always get it directly from Castor, so no caching.
+        data = self.get_data(fields, option_groups, records)
         new_data = {'dpca': {}, 'dhba': {}}
+
+        # Run through the collected data and refactor the dictionary to list procedure counts per
+        # quarter for each procedure type separately.
         for proc_type in data['dpca'].keys():
             proc_data = data['dpca'][proc_type]
             date_begin, date_end = self.get_earliest_and_latest_date(proc_data['surgery_dates'])
@@ -172,6 +170,8 @@ class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
             histogram = self.get_histogram(year_begin, year_end, proc_data['surgery_dates'], proc_data['complications'])
             histogram = self.flatten_histogram(histogram)
             new_data['dpca'][proc_type] = histogram
+
+        # Save data to JSON
         self.save_to_json(new_data, self.params['output_dir'])
 
 # dpca_typok
