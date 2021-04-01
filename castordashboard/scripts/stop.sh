@@ -1,2 +1,5 @@
 #!/usr/bin/env bash
-docker-compose down web nginx db
+
+docker-compose rm -sv web
+docker-compose rm -sv nginx
+docker-compose rm -sv db
