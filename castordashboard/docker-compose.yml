@@ -18,6 +18,7 @@ services:
     command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn dashboard.wsgi -b 0.0.0.0:8001"
     environment:
       - SECRET_KEY
+      - SCRIPTS_PACKAGE=app.scripts
     volumes:
       - ./dashboard:/src
       - etl_data:/data
@@ -32,6 +33,7 @@ services:
     environment:
       - CASTOR_CLIENT_ID
       - CASTOR_CLIENT_SECRET
+      - SCRIPTS_PACKAGE=scripts
     volumes:
       - ./etl:/src
       - etl_data:/data
