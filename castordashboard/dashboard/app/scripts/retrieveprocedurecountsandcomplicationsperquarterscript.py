@@ -8,10 +8,13 @@ class RetrieveProcedureCountsAndComplicationsPerQuarterScript(BaseScript):
     def __init__(self):
         super(RetrieveProcedureCountsAndComplicationsPerQuarterScript, self).__init__(
             name='RetrieveProcedureCountsAndComplicationsPerQuarterScript')
+        self.title = 'Procedure Counts and Overall Complications'
 
     def get_plots(self):
 
         data = self.load_data()
+
+        self.title += ' ({})'.format(self.timestamp)
 
         quarters = data['quarters']
         comp_n = data['comp_n']
@@ -39,6 +42,7 @@ class RetrieveProcedureCountsAndComplicationsPerQuarterScript(BaseScript):
             source=source,
             legend_label=['Complications YES', 'Complications NO'])
 
+        p.title.text_font_size = '16pt'
         p.xaxis.major_label_orientation = 'vertical'
         p.y_range.start = 0
         p.x_range.range_padding = 0.1
