@@ -35,6 +35,7 @@ def dashboard(request):
 
     if script_name is None:
         script_names = load_scripts()
+        print(script_names)
         return render(request, 'dashboard.html', {'script_names': script_names})
     else:
 
