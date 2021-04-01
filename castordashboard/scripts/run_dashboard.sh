@@ -6,4 +6,3 @@ export DEBUG=0
 scripts/stop.sh
 
 docker-compose up -d
-docker-compose logs -f
