@@ -30,6 +30,8 @@ class ScriptRunner:
 
         # Load script instances configured in the parameter file
         scripts_package = os.environ.get('SCRIPTS_PACKAGE', 'etl.scripts')
+        import sys
+        print('sys.path = {}'.format(sys.path))
         scripts = []
         if 'scripts' in params.keys():
             for script_name in params['scripts']:

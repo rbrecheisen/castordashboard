@@ -1,6 +1,6 @@
 {
     "scripts": [
-        "RetrieveProcedureComplicationsPerQuarterScript",
+        "RetrieveProcedureComplicationsPerQuarterScript"
     ],
     "output_dir": "/tmp/castordashboard",
     "log_dir": "/tmp/castordashboard/logs",
