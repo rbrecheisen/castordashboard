@@ -22,7 +22,7 @@ services:
     volumes:
       - ./dashboard:/src
       - etl_data:/data
-      - ./params.json:/src/params.json
+      - ./params-docker.json:/src/params.json
     depends_on:
       - db
   etl:
@@ -37,7 +37,7 @@ services:
     volumes:
       - ./etl:/src
       - etl_data:/data
-      - ./params.json:/src/params.json
+      - ./params-docker.json:/src/params.json
   db:
     restart: always
     image: postgres:10.5-alpine
