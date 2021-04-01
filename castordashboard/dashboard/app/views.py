@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from bokeh.embed import components
 
+from .scripts.basescript import BaseScript
+
 
 def register(request):
     context = {}
@@ -20,16 +22,18 @@ def register(request):
     return render(request, 'registration/register.html', context)
 
 
+def load_scripts():
+    params = BaseScript.load_params()
+    return params['scripts']
+
+
 @login_required
 def dashboard(request):
 
     script_name = request.GET.get('script_name', None)
 
     if script_name is None:
-        script_names = [
-            'RetrieveProcedureCountsAndComplicationsPerQuarterScript',
-            'RetrieveProcedureComplicationsPerQuarterScript',
-        ]
+        script_names = load_scripts()
         return render(request, 'dashboard.html', {'script_names': script_names})
     else:
         scripts_package = settings.SCRIPTS_PACKAGE
