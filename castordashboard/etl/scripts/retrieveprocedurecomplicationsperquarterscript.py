@@ -1,5 +1,5 @@
 from barbell2light.castorclient import CastorClient
-from . import BaseScript
+from .basescript import BaseScript
 
 
 class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
