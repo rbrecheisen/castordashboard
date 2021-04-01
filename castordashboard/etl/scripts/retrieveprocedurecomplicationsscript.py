@@ -10,9 +10,11 @@ class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
         super(RetrieveProcedureComplicationsPerQuarterScript, self).__init__(name, logger, params)
         self.client = CastorClient(log_dir=self.params['log_dir'])
         self.study_id = self.client.get_study_id('ESPRESSO_v2.0_DPCA')
+        # DPCA
         self.surgery_date_dpca = 'dpca_datok'
-        self.surgery_date_dhba = 'dhba_datok1'  # dhba_datok = date resection primary tumor
         self.complications_dpba = 'dpca_compl'
+        # DHBA
+        self.surgery_date_dhba = 'dhba_datok1'  # dhba_datok = date resection primary tumor
         self.complications_dhba = 'dhba_compl'
         self.procedure_type_dpca = 'dpca_typok'
         self.procedure_type_dhba = 'dhba_procok'
@@ -92,33 +94,67 @@ class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
         return histogram_new
 
     def get_data(self, fields, option_groups, records, use_cache=True):
+
+        # Check if caching is enabled, and the cache file exists. If so,
+        # load the data directly from the cache
         if use_cache and os.path.isfile('/tmp/castordashboard/cache.json'):
             with open('/tmp/castordashboard/cache.json', 'r') as f:
                 return json.load(f)
-        data = {'dpca': {}, 'dhba': {}}
-        field_id = self.client.get_field_id('dpca_typok', fields)
+
+        # No cache so we retrieve the data from Castor. Let's initialize an empty
+        # data dictionary (DPCA only for now)
+        data = {'dpca': {}}
+
+        # Get field IDs for the DPCA variables of interest
+        proc_type_id = self.client.get_field_id('dpca_typok', fields)
         surgery_date_id = self.client.get_field_id('dpca_datok', fields)
         complications_id = self.client.get_field_id('dpca_compl', fields)
+
+        # Iterate through each record of the data (this was loaded in a previous step, either
+        # from cache or Castor directly)
         for record in records:
-            field_data = self.client.get_field_data(self.study_id, record['id'], field_id)
-            if 'value' in field_data.keys():
-                option_name = self.client.get_option_name(field_data['value'], 'dpca_typok', option_groups)
-                if option_name not in data['dpca'].keys():
-                    data['dpca'][option_name] = {
+
+            # Get the procedure type data for this record. It's an option group in this case so
+            # we'll get an index value. We need to look up the procedure type name.
+            proc_type_data = self.client.get_field_data(self.study_id, record['id'], proc_type_id)
+
+            # Only if there's a 'value' key, does the procedure type have a value.
+            if 'value' in proc_type_data.keys():
+
+                # Get procedure type name
+                proc_type_name = self.client.get_option_name(proc_type_data['value'], 'dpca_typok', option_groups)
+
+                # If procedure type name was not encountered before, create an empty dictionary item for it
+                # with empty lists for surgery dates and complications
+                if proc_type_name not in data['dpca'].keys():
+                    data['dpca'][proc_type_name] = {
                         'surgery_dates': [],
                         'complications': [],
                     }
+
+                # Get surgery date
                 surgery_date_data = self.client.get_field_data(self.study_id, record['id'], surgery_date_id)
+
                 if 'value' in surgery_date_data.keys():
+
+                    # If surgery date has value, get complications (yes/no)
                     complications_data = self.client.get_field_data(self.study_id, record['id'], complications_id)
+
                     if 'value' in complications_data.keys():
+
+                        # If complications has value as well, append the values for surgery date and complications
+                        # to the lists for this procedure type.
                         d = surgery_date_data['value']
                         c = int(complications_data['value'])
-                        data['dpca'][option_name]['surgery_dates'].append(d)
-                        data['dpca'][option_name]['complications'].append(c)
+                        data['dpca'][proc_type_name]['surgery_dates'].append(d)
+                        data['dpca'][proc_type_name]['complications'].append(c)
+
                         self.logger.print('{}: surgery_date = {}, complications = {}'.format(record['id'], d, c))
+
+        # We have collected the data so now write it to JSON cache
         with open('/tmp/castordashboard/cache.json', 'w') as f:
             json.dump(data, f, indent=4)
+
         return data
 
     def execute(self):
