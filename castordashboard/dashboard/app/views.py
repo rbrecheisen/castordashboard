@@ -23,7 +23,6 @@ def register(request):
 
 
 def load_scripts():
-    # TODO: Read scripts directly from scripts directory, not params.json
     params = BaseScript.load_params()
     return params['scripts']
 
@@ -35,11 +34,8 @@ def dashboard(request):
 
     if script_name is None:
         script_names = load_scripts()
-        print(script_names)
         return render(request, 'dashboard.html', {'script_names': script_names})
     else:
-
-        # Load script
         scripts_package = settings.SCRIPTS_PACKAGE
         m = importlib.import_module('{}.{}'.format(scripts_package, script_name.lower()))
         script = getattr(m, script_name)()
@@ -47,7 +43,6 @@ def dashboard(request):
         html_scripts = []
         html_divs = []
 
-        # Get plots from script
         for p in script.get_plots():
             s, d = components(p)
             html_scripts.append(s)

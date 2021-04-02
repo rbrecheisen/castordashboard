@@ -8,7 +8,7 @@ class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
     def __init__(self):
         super(RetrieveProcedureComplicationsPerQuarterScript, self).__init__(
             name='RetrieveProcedureComplicationsPerQuarterScript')
-        self.title = 'Procedure Complications per Quarter'
+        self.title = 'Pancreatic Procedure Complications per Year'
 
     def get_plots(self):
 
@@ -21,27 +21,27 @@ class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
 
             x = data['dpca'][proc_type]
 
-            quarters = x['quarters']
+            years = [str(xx) for xx in x['years']]  # IMPORTANT: convert this to strings because it's a categorical
             comp_n = x['comp_n']
             comp_y = x['comp_y']
 
             colors = ['#718dbf', '#e84d60']
 
             source = ColumnDataSource(data={
-                'quarters': quarters,
+                'years': years,
                 'comp_n': comp_n,
                 'comp_y': comp_y,
             })
 
             p = figure(
-                x_range=quarters,
-                plot_width=1000, plot_height=500,
+                x_range=years,
+                plot_width=500, plot_height=500,
                 title=proc_type,
             )
 
             p.vbar_stack(
                 stackers=['comp_y', 'comp_n'],
-                x='quarters',
+                x='years',
                 width=0.9,
                 color=colors,
                 source=source,
