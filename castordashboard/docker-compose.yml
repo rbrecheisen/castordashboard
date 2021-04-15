@@ -4,7 +4,7 @@ services:
     image: nginx:1.15.0
     container_name: dashboard_nginx
     ports:
-      - "8000:8000"
+      - "8001:8000"
     volumes:
       - ./dashboard:/src
       - ./dashboard/nginx/nginx.conf:/etc/nginx/nginx.conf
@@ -18,10 +18,10 @@ services:
     command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn dashboard.wsgi -b 0.0.0.0:8001"
     environment:
       - SECRET_KEY
+      - PARAMS_FILE_PATH=/data/params.json
     volumes:
       - ./dashboard:/src
       - etl_data:/data
-      - ./params.json:/src/params.json
     depends_on:
       - db
   etl:
@@ -35,7 +35,7 @@ services:
     volumes:
       - ./etl:/src
       - etl_data:/data
-      - ./params.json:/src/params.json
+      - ./params.json:/data/params.json
   db:
     restart: always
     image: postgres:10.5-alpine
