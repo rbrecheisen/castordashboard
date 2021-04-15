@@ -1,5 +1,8 @@
+import os
+import json
+
 from barbell2light.castorclient import CastorClient
-from . import BaseScript
+from .basescript import BaseScript
 
 
 class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
@@ -9,17 +12,6 @@ class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
         super(RetrieveProcedureComplicationsPerQuarterScript, self).__init__(name, logger, params)
         self.client = CastorClient(log_dir=self.params['log_dir'])
         self.study_id = self.client.get_study_id('ESPRESSO_v2.0_DPCA')
-
-        # DPCA
-        self.surgery_date_dpca = 'dpca_datok'
-        self.complications_dpba = 'dpca_compl'
-
-        # DHBA
-        self.surgery_date_dhba = 'dhba_datok1'  # dhba_datok = date resection primary tumor
-        self.complications_dhba = 'dhba_compl'
-        self.procedure_type_dpca = 'dpca_typok'
-        self.procedure_type_dhba = 'dhba_procok'
-        self.procedure_type_dhba_2014 = 'dhba_typok'
 
     @staticmethod
     def get_numerical_representation(date_str):
@@ -45,56 +37,85 @@ class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
     def get_year(date_str):
         return int(date_str.split('-')[2])
 
-    @staticmethod
-    def get_month(date_str):
-        return int(date_str.split('-')[1])
+    # @staticmethod
+    # def get_month(date_str):
+    #     return int(date_str.split('-')[1])
 
     def get_histogram(self, year_begin, year_end, surgery_dates, complications):
         histogram = {}
         for year in range(year_begin, year_end + 1):
-            histogram[year] = {
-                '1_2_3': {'comp_y': 0, 'comp_n': 0},
-                '4_5_6': {'comp_y': 0, 'comp_n': 0},
-                '7_8_9': {'comp_y': 0, 'comp_n': 0},
-                '10_11_12': {'comp_y': 0, 'comp_n': 0},
-            }
+            histogram[year] = {'comp_y': 0, 'comp_n': 0}
         for i in range(len(surgery_dates)):
             d = surgery_dates[i]
             c = complications[i]
             y = self.get_year(d)
-            m = str(self.get_month(d))
             if y in histogram.keys():
-                for q in histogram[y].keys():
-                    q_items = q.split('_')
-                    if m in q_items:
-                        if c == 1:
-                            histogram[y][q]['comp_y'] += 1
-                        else:
-                            histogram[y][q]['comp_n'] += 1
+                if c == 1:
+                    histogram[y]['comp_y'] += 1
+                else:
+                    histogram[y]['comp_n'] += 1
         return histogram
 
     @staticmethod
-    def get_quarter(k):
-        if k == '1_2_3':
-            return 'q1'
-        if k == '4_5_6':
-            return 'q2'
-        if k == '7_8_9':
-            return 'q3'
-        return 'q4'
-
-    def flatten_histogram(self, histogram):
-        histogram_new = {'quarters': [], 'comp_y': [], 'comp_n': []}
+    def flatten_histogram(histogram):
+        histogram_new = {'years': [], 'comp_y': [], 'comp_n': []}
         for y in histogram.keys():
-            for k in histogram[y].keys():
-                q = self.get_quarter(k)
-                q = '{}_{}'.format(y, q)
-                histogram_new['quarters'].append(q)
-                histogram_new['comp_y'].append(histogram[y][k]['comp_y'])
-                histogram_new['comp_n'].append(histogram[y][k]['comp_n'])
+            histogram_new['years'].append(y)
+            histogram_new['comp_y'].append(histogram[y]['comp_y'])
+            histogram_new['comp_n'].append(histogram[y]['comp_n'])
         return histogram_new
 
-    def get_data(self, fields, option_groups, records):
+    # def get_histogram(self, year_begin, year_end, surgery_dates, complications):
+    #     histogram = {}
+    #     for year in range(year_begin, year_end + 1):
+    #         histogram[year] = {
+    #             '1_2_3': {'comp_y': 0, 'comp_n': 0},
+    #             '4_5_6': {'comp_y': 0, 'comp_n': 0},
+    #             '7_8_9': {'comp_y': 0, 'comp_n': 0},
+    #             '10_11_12': {'comp_y': 0, 'comp_n': 0},
+    #         }
+    #     for i in range(len(surgery_dates)):
+    #         d = surgery_dates[i]
+    #         c = complications[i]
+    #         y = self.get_year(d)
+    #         m = str(self.get_month(d))
+    #         if y in histogram.keys():
+    #             for q in histogram[y].keys():
+    #                 q_items = q.split('_')
+    #                 if m in q_items:
+    #                     if c == 1:
+    #                         histogram[y][q]['comp_y'] += 1
+    #                     else:
+    #                         histogram[y][q]['comp_n'] += 1
+    #     return histogram
+    #
+    # @staticmethod
+    # def get_quarter(k):
+    #     if k == '1_2_3':
+    #         return 'q1'
+    #     if k == '4_5_6':
+    #         return 'q2'
+    #     if k == '7_8_9':
+    #         return 'q3'
+    #     return 'q4'
+    #
+    # def flatten_histogram(self, histogram):
+    #     histogram_new = {'quarters': [], 'comp_y': [], 'comp_n': []}
+    #     for y in histogram.keys():
+    #         for k in histogram[y].keys():
+    #             q = self.get_quarter(k)
+    #             q = '{}_{}'.format(y, q)
+    #             histogram_new['quarters'].append(q)
+    #             histogram_new['comp_y'].append(histogram[y][k]['comp_y'])
+    #             histogram_new['comp_n'].append(histogram[y][k]['comp_n'])
+    #     return histogram_new
+
+    def get_data(self, fields, option_groups, records, use_cache=False):
+
+        # Use only for debugging!
+        if use_cache and os.path.isfile('cached_data.json'):
+            with open('cached_data.json', 'r') as f:
+                return json.load(f)
 
         data = {'dpca': {}}
 
@@ -144,12 +165,75 @@ class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
 
                         self.logger.print('{}: surgery_date = {}, complications = {}'.format(record['id'], d, c))
 
+        # Only for debugging
+        if use_cache:
+            with open('cached_data.json', 'w') as f:
+                json.dump(data, f, indent=4)
+
         return data
+
+    @staticmethod
+    def group_procedures(data):
+
+        PROC = [
+            "Pylorus-preserving pancreaticoduodenectomy (PPPD)",  # 0
+            "Pylorus ring resection pancreaticoduodenectomy (PRPD)",  # 1
+            "Enucleation pancreas tumor",  # 2
+            "Classical Whipple",  # 3
+            "Pancreatic corpus/tail resection",  # 4
+            "Total pancreatectomy",  # 5
+        ]
+
+        # Define new set of (grouped) procedures
+        new_data = {
+            'dpca': {
+                'Whipple': {},
+                'Pancreas tail resection': {},
+                'Total pancreatectomy': {},
+                'All procedures': {},
+            },
+        }
+
+        # Iterate through original procedures and put them in the right place
+        for proc_type in data['dpca'].keys():
+
+            # Determine key for new dictionary
+            key = None
+            if proc_type == PROC[0] or proc_type == PROC[1] or proc_type == PROC[2] or proc_type == PROC[3]:
+                key = 'Whipple'
+            if proc_type == PROC[4]:
+                key = 'Pancreas tail resection'
+            if proc_type == PROC[5]:
+                key = 'Total pancreatectomy'
+
+            # If key is still None, skip iteration
+            if key is None:
+                continue
+
+            # Copy year and complication info to new dictionary
+            for i in range(len(data['dpca'][proc_type]['years'])):
+
+                year = data['dpca'][proc_type]['years'][i]
+                comp_y = data['dpca'][proc_type]['comp_y'][i]
+                comp_n = data['dpca'][proc_type]['comp_n'][i]
+
+                if year not in new_data['dpca'][key].keys():
+                    new_data['dpca'][key][year] = {'comp_y': 0, 'comp_n': 0}
+                if year not in new_data['dpca']['All procedures'].keys():
+                    new_data['dpca']['All procedures'][year] = {'comp_y': 0, 'comp_n': 0}
+
+                new_data['dpca'][key][year]['comp_y'] += comp_y
+                new_data['dpca'][key][year]['comp_n'] += comp_n
+                new_data['dpca']['All procedures'][year]['comp_y'] += comp_y
+                new_data['dpca']['All procedures'][year]['comp_n'] += comp_n
+
+        return new_data
 
     def execute(self):
 
         # Get Castor field definitions. Use cache if configured
         use_cache = True if 'use_cache' in self.params.keys() and self.params['use_cache'] else False
+        use_cache = True
         verbose = True if 'verbose' in self.params.keys() and self.params['verbose'] else False
         fields = self.client.get_fields(self.study_id, use_cache=use_cache, verbose=verbose)
 
@@ -157,18 +241,26 @@ class RetrieveProcedureComplicationsPerQuarterScript(BaseScript):
         records = self.client.get_records(self.study_id, use_cache=use_cache, verbose=verbose)
         option_groups = self.client.get_option_groups(self.study_id, verbose=verbose)
 
-        # Get Castor data. We always get it directly from Castor, so no caching.
-        data = self.get_data(fields, option_groups, records)
-        new_data = {'dpca': {}, 'dhba': {}}
+        # Get Castor data. We always get it directly from Castor, so no caching. This is the raw data
+        # so we should save it to JSON. The dashboard app can then decide for itself what to display.
+        data = self.get_data(fields, option_groups, records, use_cache=True)
 
         # Run through the collected data and refactor the dictionary to list procedure counts per
         # quarter for each procedure type separately.
+        new_data = {'dpca': {}}
         for proc_type in data['dpca'].keys():
             proc_data = data['dpca'][proc_type]
             date_begin, date_end = self.get_earliest_and_latest_date(proc_data['surgery_dates'])
             year_begin, year_end = self.get_year(date_begin), self.get_year(date_end)
             histogram = self.get_histogram(year_begin, year_end, proc_data['surgery_dates'], proc_data['complications'])
             histogram = self.flatten_histogram(histogram)
+            new_data['dpca'][proc_type] = histogram
+
+        # Group procedures differently, e.g. serveral procedures should be classified as "Whipple" procedures
+        new_data = self.group_procedures(new_data)
+
+        for proc_type in new_data['dpca'].keys():
+            histogram = self.flatten_histogram(new_data['dpca'][proc_type])
             new_data['dpca'][proc_type] = histogram
 
         # Save data to JSON

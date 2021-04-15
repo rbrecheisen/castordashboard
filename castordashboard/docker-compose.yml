@@ -18,6 +18,7 @@ services:
     command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn dashboard.wsgi -b 0.0.0.0:8001"
     environment:
       - SECRET_KEY
+      - SCRIPTS_PACKAGE=app.scripts
       - PARAMS_FILE_PATH=/data/params.json
     volumes:
       - ./dashboard:/src
@@ -32,10 +33,11 @@ services:
     environment:
       - CASTOR_CLIENT_ID
       - CASTOR_CLIENT_SECRET
+      - SCRIPTS_PACKAGE=scripts
     volumes:
       - ./etl:/src
       - etl_data:/data
-      - ./params.json:/data/params.json
+      - ./params-docker.json:/data/params.json
   db:
     restart: always
     image: postgres:10.5-alpine

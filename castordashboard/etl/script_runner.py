@@ -1,6 +1,5 @@
 import os
 import json
-import argparse
 import importlib
 import datetime
 
@@ -30,10 +29,13 @@ class ScriptRunner:
     def load_scripts(logger, params):
 
         # Load script instances configured in the parameter file
+        scripts_package = os.environ.get('SCRIPTS_PACKAGE', 'etl.scripts')
+        import sys
+        print('sys.path = {}'.format(sys.path))
         scripts = []
         if 'scripts' in params.keys():
             for script_name in params['scripts']:
-                m = importlib.import_module('etl.scripts.{}'.format(script_name.lower()))
+                m = importlib.import_module('{}.{}'.format(scripts_package, script_name.lower()))
                 script = getattr(m, script_name)
                 scripts.append(script(script_name, logger, params))
         return scripts

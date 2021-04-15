@@ -15,7 +15,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 PARAMS_FILE_PATH = os.environ.get('PARAMS_FILE_PATH', 'params.json')
 
 
-if os.environ.get('DEBUG', False):
+SCRIPTS_PACKAGE = os.environ.get('SCRIPTS_PACKAGE', 'app.scripts')
+
+
+if os.environ.get('DEBUG', '0') == '1':
     DEBUG = True
 else:
     DEBUG = False
