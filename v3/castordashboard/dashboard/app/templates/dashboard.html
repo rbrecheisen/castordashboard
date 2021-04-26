@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card" style="margin-top: 10px;">
+                <div class="card-header">Notes</div>
+                <div class="card-body">
+                    <p class="card-text">
+                        This dashboard graphics shown on this page are directly generated from data extracted
+                        from a live Castor study, in this case, the DPCA (pancreas) study.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-7">
+            {% if script_names %}
+                <ul class="list-group" style="margin-top: 10px">
+                    {% for script_name in script_names %}
+                        <a class="list-group-item list-group-item-action" href="/?script_name={{ script_name }}"
+                           style="color: blue;">
+                            {{ script_name }}
+                        </a>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <p style="margin-left: 20px; margin-top: 20px; font-size: 32px; font-weight: bold;">
+                {{ title }}
+            </p>
+            {% for div in divs %}
+                {{ div | safe }}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

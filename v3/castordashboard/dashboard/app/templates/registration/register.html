@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card" style="margin-top: 10px;">
+                <div class="card-header">Create an account</div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" id="username"
+                                   placeholder="Username" required>
+                            <p><i>150 characters or fewer (letters, digits)</i></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_password1" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password1" id="id_password1"
+                                   placeholder="Password" aria-describedby="info" required>
+                            <p><i>
+                                <ul>
+                                    <li>Your password cannot be too similar to your other personal information</li>
+                                    <li>Your password must contain at least 8 characters</li>
+                                    <li>Your password cannot be a commonly used password (e.g., "password1")</li>
+                                    <li>Your password cannot be entirely numeric</li>
+                                </ul>
+                            </i></p>
+                            <label for="id_password2" class="form-label">Password confirmation</label>
+                            <input type="password" class="form-control" name="password2" id="id_password2"
+                                   placeholder="Password" aria-describedby="info" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
