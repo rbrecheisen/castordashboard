@@ -6,7 +6,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from bokeh.embed import components
-from .scripts.basescript import BaseScript
+from .scripts import BaseScript, get_script
 
 
 def register(request):
@@ -35,9 +35,7 @@ def dashboard(request):
         script_names = load_scripts()
         return render(request, 'dashboard.html', {'script_names': script_names})
     else:
-        scripts_package = settings.SCRIPTS_PACKAGE
-        m = importlib.import_module('{}.{}'.format(scripts_package, script_name.lower()))
-        script = getattr(m, script_name)()
+        script = get_script(script_name)
 
         html_scripts = []
         html_divs = []

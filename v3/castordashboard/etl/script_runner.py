@@ -45,8 +45,8 @@ class ScriptRunner:
 
 
 def main():
-    output_dir = os.environ['CASTOR_DASHBOARD_OUTPUT_DIR']
-    log_dir = os.environ['CASTOR_DASHBOARD_LOG_DIR']
+    output_dir = os.environ['OUTPUT_DIR']
+    log_dir = os.environ['LOG_DIR']
     runner = ScriptRunner(output_dir, log_dir)
     runner.execute()
 

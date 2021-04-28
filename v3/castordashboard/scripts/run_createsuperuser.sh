@@ -7,7 +7,8 @@ export SQLITE3_DIR=${OUTPUT_DIR}
 export LOG_DIR=${OUTPUT_DIR}/logs
 export DEBUG=1
 
+export command="from django.contrib.auth.models import User"
+export command="${command}; User.objects.create_superuser('ralph', 'ralph@example.com', 'foobar')"
+
 cd dashboard
-python manage.py makemigrations app
-python manage.py migrate
-python manage.py runserver 0.0.0.0:80
+echo ${command} | python manage.py shell

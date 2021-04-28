@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SQLITE3_DIR = os.environ.get('SQLITE3_DIR', None)
 
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', None)
 
 
 PARAMS_FILE_PATH = os.environ.get('PARAMS_FILE_PATH', 'params.json')
