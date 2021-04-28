@@ -10,4 +10,4 @@ export DEBUG=1
 cd dashboard
 python manage.py makemigrations app
 python manage.py migrate
-python manage.py runserver 0.0.0.0:80
+python manage.py runserver 0.0.0.0:8000
